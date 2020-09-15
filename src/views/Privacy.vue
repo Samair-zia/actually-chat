@@ -8,7 +8,7 @@
     <section class="privacy-sec">
       <div class="container">
         <ul class="privacy-text-wrap">
-          <li v-for="(privacyText, index) in privacyTexts" :key="index">{{ privacyText.desc }}</li>
+          <li v-for="(privacyText, index) in privacyTexts" :key="index">{{ privacyText.PrivacyText }}</li>
         </ul>
       </div>
     </section>
@@ -20,15 +20,20 @@ export default {
   name: 'Privacy',
   data(){
     return{
-      privacyTexts: [
-        { desc: `Members' registration information (full name, phone number and email address) will be kept confidential and not going to be used for any other purpose.` },
-        { desc: `Only the Username will appear to other members when posting a question or sharing health information. Members should only share the information they feel comfortable to share.` },
-        { desc: `The shared content will be kept in the members' database and only members can access. Relevant information can be searched by key words.` },
-        { desc: `No third party will gather any information about members through the use of this website or sharing information.` },
-        { desc: `May release personal information to comply with Law if required by law enforcement agency.` },
-        { desc: `Children under 13 should not become a member to this website.` }
-      ]
+      axios: require('axios'),
+      privacyTexts: []
     }
+  },
+  mounted(){
+    this.axios.get(process.env.VUE_APP_APIURL + 'privacy_api')
+    .then((response) => {
+      const res = response.data.Message.Privacy;
+      this.privacyTexts = res; 
+      console.log(res)
+    })
+    .catch((error) => {
+      console.log('Error', error)
+    })
   }
 }
 </script>

@@ -1,20 +1,9 @@
 <template>
   <div class="home">
     <section class="index-sec-1">
-      <!-- <div class="main-video-wrapper">
-        <video muted autoplay loop>
-          <source src="@/assets/video/main-vid.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>-->
       <div class="container">
         <div class="main-inner-wrap">
-          <h1 v-html="banner.bannerText" data-aos="fade-up" data-aos-duration="1500">
-            <!-- {{ banner.bannerText }} -->
-            <!-- At Actually Health Chat, health-related information is shared by our members and serves our members.
-            <br />
-            <br />Helping each other, we will all stay well! -->
-          </h1>
+          <h1 v-html="banner.bannerText" data-aos="fade-up" data-aos-duration="1500"></h1>
         </div>
       </div>
     </section>
@@ -41,7 +30,6 @@
               <img
                 src="@/assets/images/vision-img-1.png"
                 class="img-fluid"
-                alt
                 data-aos="zoom-in-up"
                 data-aos-duration="1500"
               />
@@ -71,13 +59,11 @@
 <script>
 // @ is an alias to /src
 import OurTeam from "@/components/OurTeam.vue";
-// import OurVision from '@/components/OurVision.vue'
 
 export default {
   name: "Home",
   components: {
     OurTeam,
-    // OurVision
   },
   data() {
     return {
@@ -95,11 +81,10 @@ export default {
   },
   mounted() {
     this.axios
-      .get("https://dev73.myprojectstaging.com/oread-health/web/homepage_api")
+      .get(process.env.VUE_APP_APIURL + 'homepage_api')
       .then((response) => {
         const res = response.data.Message;
         console.log(res);
-        // this.banner.bannerImage = res.Banner.BannerImage;
         this.banner.bannerText = res.Banner.BannerText;
 
         this.vision.visionText = res.Vision.VisionText;

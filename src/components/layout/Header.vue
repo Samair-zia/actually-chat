@@ -5,7 +5,7 @@
         <div class="row align-items-center">
           <div class="col-sm-6 col-md-4 col-lg-4">
             <div class="head-top-left-wrap">
-              <a href="#!"><i class="fas fa-envelope"></i>Email:  info@actuallyhc.com</a>
+              <a href="#!"><i class="fas fa-envelope"></i>Email: {{ headerEmail }}</a>
             </div>
           </div>
           <div class="col-sm-6 col-md-4 col-lg-4 text-center">
@@ -13,7 +13,7 @@
           </div>
           <div class="col-sm-6 col-md-4 col-lg-4">
             <div class="head-top-right-wrap">
-              <a href="#!"><i class="fas fa-phone-alt"></i>Contact: 012-345-67890</a>
+              <a href="#!"><i class="fas fa-phone-alt"></i>Contact: {{ headerPhone }}</a>
             </div>
           </div>
         </div>
@@ -43,9 +43,24 @@ export default {
   name: 'Header',
   data(){
     return{
-
+      axios: require("axios"),
+      headerEmail: '',
+      headerPhone: '',
     }
-  }  
+  },
+  mounted(){
+    this.axios
+      .get(process.env.VUE_APP_APIURL + 'header_api')
+      .then((response) => {
+        const res = response.data.Message;
+        
+        this.headerEmail = res.HeaderEmail;
+        this.headerPhone = res.HeaderPhone;
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  },
 }
 </script>
 

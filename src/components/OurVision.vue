@@ -4,7 +4,7 @@
         <div class="row align-items-center">
           <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="index-2-left-wrap">
-              <p data-aos="fade-up" data-aos-duration="1500">Actually Health Chat is founded to provide a free online platform for members to ask questions, share and exchange information on various aspects of health conditions and health care.  Issues such as symptoms, treatments, medicines, medical devices, health care providers and facilities based on their own experiences (or experiences of their family members and friends) are being explored.  Information from credible sources including news reports, publications and books may also be discussed. Thus, members share and discuss information as a service to each other.</p>
+              <p data-aos="fade-up" data-aos-duration="1500">{{ visionText }}</p>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
@@ -15,7 +15,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <p class="para-text" data-aos="fade-down" data-aos-duration="1500">The information shared by the members does not intend to replace the advice and treatments by health care experts. If you fall ill, you ought to go to see a doctor. But this platform helps members to make better decisions, explore more options or find alternative health care providers and facilities to better fit their individual situations.</p>
+            <p class="para-text" data-aos="fade-down" data-aos-duration="1500">{{ visionSubText }}</p>
           </div>
         </div>
       </div>
@@ -27,8 +27,21 @@ export default {
   name: 'OurVision',
   data(){
     return{
-
+      axios: require("axios"),
+      visionText: '',
+      visionSubText: ''
     }
+  },
+  mounted(){
+    this.axios.get(process.env.VUE_APP_APIURL + 'vision_api')
+    .then((response) => {
+      const res = response.data.Message;
+      this.visionText = res.VisionText;
+      this.visionSubText = res.VisionSubText;
+    })
+    .catch((error) => {
+      console.log("Error", error)
+    })
   }
 }
 </script>

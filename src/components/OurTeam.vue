@@ -5,7 +5,7 @@
         <div class="col-sm-6 col-md-6 col-lg-6 mb-5" v-for="(member , index) in members" :key="index">
           <div class="single-member-wrap" data-aos="fade-down" data-aos-duration="1800">
             <div class="sm-img-wrap">
-              <img :src="member.TeamMemberImage" class="img-fluid" alt="">
+              <img :src="baseURL + member.TeamMemberImage" class="img-fluid" alt="">
               <div class="sm-img-inner">
                 <h3>{{ member.TeamMemberName }}</h3>
                 <h5>{{ member.TeamMemberDesignation }}</h5>
@@ -27,6 +27,7 @@ export default {
   data(){
     return{
       axios: require("axios"),
+      baseURL: process.env.VUE_APP_APIURL + 'uploads/team/',
       members: [
         // { 
         //   name: `Sara Wu`,
@@ -50,11 +51,17 @@ export default {
     }
   },
   mounted() {
+    console.log(process.env.VUE_APP_APIURL);
+    // const imgPath = require(process.env.VUE_APP_APIURL);
+    // console.log(imgPath)
     this.axios
-      .get("https://dev73.myprojectstaging.com/oread-health/web/teampage_api")
+      // .get("https://dev73.myprojectstaging.com/oread-health/web/teampage_api")
+      .get(process.env.VUE_APP_APIURL + 'teampage_api')
       .then((response) => {
-        this.members = response.data.Message.Team;
+        this.members = [ ...response.data.Message.Team ];
         const res = response.data.Message.Team;
+        const teamImg = response.data.Message.Team.TeamMemberImage;
+        console.log(teamImg);
         console.log(res);
       })
       .catch((error) => {

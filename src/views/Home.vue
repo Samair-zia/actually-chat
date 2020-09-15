@@ -9,8 +9,8 @@
       </div>-->
       <div class="container">
         <div class="main-inner-wrap">
-          <h1 data-aos="fade-up" data-aos-duration="1500">
-            {{ banner.bannerText }}
+          <h1 v-html="banner.bannerText" data-aos="fade-up" data-aos-duration="1500">
+            <!-- {{ banner.bannerText }} -->
             <!-- At Actually Health Chat, health-related information is shared by our members and serves our members.
             <br />
             <br />Helping each other, we will all stay well! -->

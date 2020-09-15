@@ -27,7 +27,7 @@
               <p
                 data-aos="fade-up"
                 data-aos-duration="1500"
-              >Actually Health Chat is founded to provide a free online platform for members to ask questions, share and exchange information on various aspects of health conditions and health care. Issues such as symptoms, treatments, medicines, medical devices, health care providers and facilities based on their own experiences (or experiences of their family members and friends) are being explored. Information from credible sources including news reports, publications and books may also be discussed. Thus, members share and discuss information as a service for each other.</p>
+              >{{ vision.visionText }}</p>
               <router-link
                 to="/vision"
                 class="btn-vision"
@@ -54,7 +54,7 @@
               class="para-text"
               data-aos="fade-down"
               data-aos-duration="1500"
-            >The information shared by the members does not intend to replace the advice and treatments by health care experts. If you fall ill, you ought to go to see a doctor. But this platform helps members to make better decisions, explore more options or find alternative health care providers and facilities to better fit their individual situations.</p>
+            >{{ vision.visionSubtext }}</p>
           </div>
         </div>
       </div>
@@ -102,7 +102,8 @@ export default {
         // this.banner.bannerImage = res.Banner.BannerImage;
         this.banner.bannerText = res.Banner.BannerText;
 
-        this.vision.bannerText = res.Banner.BannerText;
+        this.vision.visionText = res.Vision.VisionText;
+        this.vision.visionSubtext = res.Vision.VisionSubText;
         // console.log(this.banner.bannerText)
       })
       .catch((error) => {

@@ -27,9 +27,11 @@ export default {
       }
     })
     .then((response) => {
+      console.log(response)
       next(vm => {
         vm.$emit('loggedIn');
         vm.categoryList = [ ...response.data.Message.Category ];
+        console.log("blahh",vm.categoryList[1].CategoryId)
       });
     })
     .catch((error) => {

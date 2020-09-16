@@ -1,15 +1,15 @@
 <template>
   <div class="cat-question">
     <div class="question-wrap">
-      <div class="question-inner">
-        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias? Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias?</h3>
+      <div class="question-inner" v-for="(question, index) in questions" :key="index">
+        <h3>{{ question.name }}</h3>
         <div class="quest-right-wrap">
           <div class="ques-comments">
-            <div class="commentbg">125</div>
+            <div class="commentbg">{{ question.commentCount }}</div>
           </div>
           <div class="ques-time">
             <font-awesome-icon :icon="['far', 'clock']" class="iconn" />
-            <span>24 min</span>
+            <span>{{ question.time }}</span>
           </div>
         </div>
       </div>
@@ -64,6 +64,7 @@ export default {
   background-color: #ffffff;
   border-radius: 2px;
   box-shadow: 0 1px 2px #c9cccd;
+  margin-bottom: 10px;
 }
 .quest-right-wrap{
   min-width: 100px;

@@ -63,7 +63,7 @@ const routes = [
     beforeEnter: checkAuth,
   },
   {
-    path: '/discussion-list',
+    path: '/discussion-list/:id',
     name: 'DiscussionList',
     component: DiscussionList,
     beforeEnter: checkAuth,

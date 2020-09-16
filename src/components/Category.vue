@@ -3,7 +3,7 @@
     <div class="container">
       <h3>Categories</h3>
       <div class="category-wrapper">
-        <router-link class="single-category" to="/" v-for="(category, index) in categories" :key="index">{{ category.name }}</router-link>
+        <router-link class="single-category" to="/" v-for="category in categories" :key="`category-${category.CategoryId}`">{{ category.CategoryName }}</router-link>
       </div>
     </div>
   </div>
@@ -12,45 +12,12 @@
 <script>
 export default {
   name: 'Category',
-  data(){
-    return{
-      categories: [
-        { name: 'COVID-19' },
-        { name: 'ADHD' },
-        { name: 'Allergies' },
-        { name: 'Alzheimer’s Disease' },
-        { name: 'Anxiety' },
-        { name: 'Arthritis' },
-        { name: 'Autism' },
-        { name: 'Cancers' },
-        { name: 'Cataract' },
-        { name: 'Depression' },
-        { name: 'Diabetes' },
-        { name: 'Dry eye' },
-        { name: 'Dyslexia' },
-        { name: 'Gastric Acid Reflux Disease' },
-        { name: 'Glaucoma' },
-        { name: 'Heart Disease' },
-        { name: 'Hearing Loss and Tinnitus' },
-        { name: 'Herbal Medicine and Acupuncture' },
-        { name: 'High Blood Pressure' },
-        { name: 'High Cholesterol or Triglycerides' },
-        { name: 'HIV and AIDS' },
-        { name: 'Hyperbaric Oxygen Therapy' },
-        { name: 'Kidney Disease' },
-        { name: 'Knee, Hip and other Joint Problems' },
-        { name: 'Migraine' },
-        { name: 'Parkinson Diseases' },
-        { name: 'Sinusitis' },
-        { name: 'Sleep Disorder' },
-        { name: 'Urinary tract (bladder) infections' },
-        { name: 'Vaccination' },
-        { name: 'Yoga and massage therapy' },
-        { name: 'Miscellaneous diseases' },
-        { name: 'Medical Devices' },
-      ]
-    }
-  }
+  props: {
+    categories: {
+      required: true,
+      type: Array,
+    },
+  },
 }
 </script>
 

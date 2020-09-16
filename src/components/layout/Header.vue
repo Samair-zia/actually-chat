@@ -28,9 +28,10 @@
             <li class="main-nav-li"><router-link class="main-nav-link" to="/our-team">Our Team</router-link></li>
           </ul>
           <div class="account-wrap">
-            <router-link class="account-link" to="/login">Login</router-link>
+            <router-link v-if="!loggedIn" class="account-link" to="/login">Login</router-link>
+            <router-link v-if="loggedIn" class="account-link" to="/logout">Logout</router-link>
             <router-link class="account-link" to="/categories">Members Area</router-link>
-            <router-link class="account-link" to="/discussion">Discussion</router-link>
+            <router-link v-if="loggedIn" class="account-link" to="/discussion">Discussion</router-link>
           </div>
         </div>
       </div>
@@ -41,6 +42,11 @@
 <script>
 export default {
   name: 'Header',
+  props: {
+    loggedIn: {
+      required: true,
+    }
+  },
   data(){
     return{
       axios: require("axios"),

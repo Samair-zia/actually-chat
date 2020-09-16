@@ -11,9 +11,20 @@ import DiscussionList from '../views/DiscussionList.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import vueConfig from '../../vue.config'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-  const routes = [
+const checkAuth = (to, from, next) => {
+  if(!localStorage.getItem('UserToken')) {
+    localStorage.removeItem('UserID');
+    localStorage.removeItem('UserToken');
+    next({ name: 'Login' });
+  }
+  else {
+    next();
+  }
+};
+
+const routes = [
   {
     path: '/',
     name: 'Home',
@@ -42,17 +53,20 @@ Vue.use(VueRouter)
   {
     path: '/categories',
     name: 'Categories',
-    component: Categories
+    component: Categories,
+    beforeEnter: checkAuth,
   },
   {
     path: '/discussion',
     name: 'Discussion',
-    component: Discussion
+    component: Discussion,
+    beforeEnter: checkAuth,
   },
   {
     path: '/discussion-list',
     name: 'DiscussionList',
-    component: DiscussionList
+    component: DiscussionList,
+    beforeEnter: checkAuth,
   },
   {
     path: '/forgot-password',

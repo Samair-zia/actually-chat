@@ -220,7 +220,6 @@ export default {
     },
     login() {
       const data = new FormData(this.$refs.formLogin);
-      console.log(data);
       this.axios
         .post(
           "https://dev73.myprojectstaging.com/oread-health/web/login_api",
@@ -228,9 +227,10 @@ export default {
         )
         .then((response) => {
           const status = response.data.Status;
-          console.log(status);
           console.log("Result", response);
           if(status == '200'){
+            localStorage.setItem('UserID', response.data.Message.UserID);
+            localStorage.setItem('UserToken', response.data.Message.UserToken);
             this.$router.push('/categories');
           }
           else if(status == '400') {

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header />
-      <router-view/>
+    <Header :loggedIn="isLoggedIn"/>
+      <router-view @loggedIn="updateLoggedInStatus"/>
     <Footer />
   </div>
 </template>
@@ -19,10 +19,13 @@ export default {
     return{
       // nonHeaderPages: ['views.login'],
       // nonFooterPages: ['views.login'],
+      isLoggedIn: localStorage.getItem('UserToken'),
     }
   },
-  computed: {
-
+  methods: {
+    updateLoggedInStatus() {
+      this.isLoggedIn = localStorage.getItem('UserToken');
+    },
   }
 }
 </script>

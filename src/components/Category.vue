@@ -3,7 +3,7 @@
     <div class="container">
       <h3>Categories</h3>
       <div class="category-wrapper">
-        <router-link class="single-category" :to="'discussion-list/' + category.CategorySlug" v-for="category in categories" :key="`category-${category.CategoryId}`">{{ category.CategoryName }}</router-link>
+        <router-link class="single-category" :to="{ name: 'DiscussionList', params: { id: category.CategoryId } }"  v-for="category in categories" :key="`category-${category.CategoryId}`">{{ category.CategoryName }} {{ category.CategoryId }} </router-link>
       </div>
     </div>
   </div>
@@ -18,14 +18,6 @@ export default {
       type: Array,
     },
   },
-  data(){
-    return{
-      // categoryId: categories.CategoryId
-    }
-  },
-  mounted(){
-    // console.log("from category component", this.categoryId)
-  }
 }
 </script>
 

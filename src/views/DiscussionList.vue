@@ -27,7 +27,7 @@ export default {
   name: "DiscussionList",
   data() {
     return {
-      axios: require('axios'),
+      axios: require("axios"),
       userId: this.$route.params.id,
       questions: [
         {
@@ -48,8 +48,45 @@ export default {
       ],
     };
   },
+  methods: {
+    receiveFaq(fetching_data) {
+      fetching_data
+        .then((r) => r.json())
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error.response);
+          alert("Error Fetching Data. Try Again");
+        });
+    },
+  },
   beforeRouteEnter(to, from, next) {
-    const data = new FormData();
+    require("axios")
+      .get(process.env.VUE_APP_APIURL + "discussion_api/" + to.params.id)
+      .then((response) => {
+        console.log(response)
+        // const res = response.data;
+
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+
+    // console.log(to.params.id);
+    console.log(from);
+    console.log(next);
+    // const fetching_data = fetch(
+    //   `${process.env.VUE_APP_APIURL}discussion_api`,
+    //   to.params.id
+    // ).then((r) => r.json())
+    //   .then((res) => {
+    //     console.log(res);
+    //   }); 
+    // next((vm) => {
+    //   vm.receiveFaq(fetching_data);
+    // });
+    /* const data = new FormData();
     data.append('register_id', localStorage.getItem('UserID'));
     require('axios').post(process.env.VUE_APP_APIURL + 'discussion_api', data, {
       headers: {
@@ -58,6 +95,26 @@ export default {
     })
     .then((response) => {
       console.log(response)
+        const status = response.data.Status;
+          console.log("Result", response);
+          if(status == '200'){
+            // localStorage.setItem('UserID', response.data.Message.UserID);
+            // localStorage.setItem('UserToken', response.data.Message.UserToken);
+            // this.$router.push('/categories');
+          }
+          else if(status == '400') {
+            alert('Bad Request. Server issue occured.')
+          }
+          else if(status == '403') {
+            alert(response.data.Status_Detail)
+          }
+          else if(status == '422') {
+            alert(response.data.Status_Detail)
+          }
+
+
+
+
       next(vm => {
         vm.$emit('loggedIn');
         // vm.categoryList = [ ...response.data.Message.Category ];
@@ -68,8 +125,8 @@ export default {
       // localStorage.removeItem('UserID');
       // localStorage.removeItem('UserToken');
       // next({ name: 'Login' });
-    });
-  }
+    }); */
+  },
 };
 </script>
 
@@ -167,3 +224,19 @@ export default {
   margin-left: 5px;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

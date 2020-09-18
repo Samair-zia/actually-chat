@@ -2,21 +2,21 @@
   <div class="discussion">
     <div class="container">
       <div class="question-wrap">
-      <div class="question-inner">
-        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias? Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias?</h3>
+      <div class="question-inner" v-for="(texts, index) in data" :key="index">
+        <h3>{{ texts.DiscussText }}</h3>
         <div class="quest-right-wrap">
           <div class="ques-comments">
-            <div class="commentbg">125</div>
+            <div class="commentbg">{{ texts.DiscusCount }}</div>
           </div>
           <div class="ques-time">
             <font-awesome-icon :icon="['far', 'clock']" class="iconn" />
-            <span>24 min</span>
+            <span>{{ texts.DiscusTime }}</span>
           </div>
         </div>
       </div>
     </div>
       <!-- <DiscussQuestion /> -->
-      <Comments />
+      <Comments :commentss="commentsData" />
     </div>
   </div>
 </template>
@@ -33,8 +33,41 @@ export default {
   },
   data(){
     return{
-
+      data: [],
+      commentsData:[]
     }
+  },
+  beforeRouteEnter(to, from, next) {
+      const data = new FormData();
+      data.append('register_id', localStorage.getItem('UserID'));
+      data.append('discus_id', to.params.id);
+      require('axios').post(process.env.VUE_APP_APIURL + "discussions_comments_api", data, {
+      headers: {
+        'token': localStorage.getItem('UserToken'),
+      }
+    })
+      .then(response => {
+          const status = response.data.Status;
+          console.log(status);
+          console.log("Result", response);
+          next(vm => {
+            vm.data = response.data.Message.Discussion,
+            vm.commentsData = response.data.Message.Comments
+            });
+
+          // if(status == '200'){
+          //   this.$router.push('/categories');
+          // }
+          // else if(status == '400') {
+          //   alert('Bad Request. Server issue occured.')
+          // }
+          // else if(status == '422') {
+          //   alert(response.data.Message.register_email)
+          // }
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
   }
 }
 </script>
@@ -94,6 +127,7 @@ export default {
   color: #282828;
   font-size: 12px;
   line-height: 29px;
+  padding: 0 10px;
   border-left: 1px solid #e0e0e0;
   border-top: 1px solid #e0e0e0;
 }

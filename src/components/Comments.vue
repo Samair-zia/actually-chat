@@ -2,24 +2,16 @@
   <div class="comments">
     <section class="comment-sec-1">
       <div class="comment-wrapper">
-        <h5 class="c-name">Brad Traversy</h5>
-        <label class="c-time">07:23:00</label>
-        <p class="single-comment">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores ducimus delectus ad sed doloribus quibusdam aliquid dicta adipisci alias rem! Ipsam at culpa blanditiis, nobis totam beatae molestiae ipsa aliquam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur mollitia inventore illum accusamus vel dolorum porro? Commodi cum explicabo fuga quod minima soluta illum impedit fugit, quam natus sapiente numquam!
-        </p>
-        
-        <h5 class="c-name mt-4">Lynda Olin</h5>
-        <label class="c-time">03:12:09</label>
-        <p class="single-comment">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores ducimus delectus ad sed doloribus quibusdam aliquid dicta adipisci alias rem! Ipsam at culpa blanditiis, nobis totam beatae molestiae ipsa aliquam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur mollitia inventore illum accusamus vel dolorum porro? Commodi cum explicabo fuga quod minima soluta illum impedit fugit, quam natus sapiente numquam!
-        </p>
-        <h5 class="c-name mt-4">Kevin Brien</h5>
-        <label class="c-time">12:54:40</label>
-        <p class="single-comment">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores ducimus delectus ad sed doloribus quibusdam aliquid dicta adipisci alias rem! Ipsam at culpa blanditiis, nobis totam beatae molestiae ipsa aliquam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur mollitia inventore illum accusamus vel dolorum porro? Commodi cum explicabo fuga quod minima soluta illum impedit fugit, quam natus sapiente numquam!
-        </p>
-        <input type="text" placeholder="Enter comment"> <br>
-        <button>Comment</button>
+        <div class="comment-inner" v-for="(comment, index) in commentss" :key="index">
+          <h5 class="c-name">{{ comment.UserName }}</h5>
+          <label class="c-time"> {{ comment.CommentsTime }} </label>
+          <p class="single-comment">{{ comment.CommentsText }}</p>
+        </div>
+        <hr>
+        <form @submit.prevent="addComment">
+          <input type="text" v-model="newComment" placeholder="Enter comment"> <br>
+          <button>Comment</button>
+        </form>
       </div>
     </section>
   </div>
@@ -28,9 +20,40 @@
 <script>
 export default {
   name: 'Comments',
+  props: {
+    commentss: {
+      required: true,
+      type: Array,
+    },
+  },
   data(){
     return{
-
+      newComment: ''
+    }
+  },
+  methods: {
+    addComment(){
+      const data = new FormData();
+      data.append('register_id', localStorage.getItem('UserID'));
+      data.append('discus_id', '7');
+      data.append('comments_text', this.newComment);
+      require('axios').post(process.env.VUE_APP_APIURL + "post_comments_api", data, {
+      headers: {
+        'token': localStorage.getItem('UserToken'),
+      }
+    })
+    .then(response => {
+      const status = response.data.Status;
+      console.log(status);
+      console.log("Result", response);
+      // next(vm => {
+      //   vm.data = response.data.Message.Discussion,
+      //   vm.commentsData = [ ...response.data.Message.Comments]
+      // });
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
     }
   }
 }
@@ -40,6 +63,9 @@ export default {
 .comment-sec-1{}
 .comment-wrapper{
   padding-bottom: 30px;
+}
+.comment-inner{
+  margin-bottom: 15px;
 }
 .c-name{
   font-size: 16px;
@@ -67,9 +93,9 @@ export default {
   border: 1px solid #eee;
   box-shadow: 0 0 6px rgba(2, 3, 3, .1);
   font-size: 14px;
-  max-width: 720px;
+  max-width: 850px;
   width: 100%;
-  margin: 25px 0 0;
+  margin: 5px 0 0;
   padding: 7px;
   color: #000;
 }

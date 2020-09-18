@@ -4,18 +4,18 @@
       <div class="container">
         <h2>Discussions</h2>
         <div class="question-wrap">
-          <div class="question-inner" v-for="(question, index) in questions" :key="index">
-            <h3>{{ question.name }}</h3>
+          <router-link v-for="(question, index) in questions" :key="index" :to="{ name: 'Discussion', params: { id: question.DiscussId } }" tag="div" class="question-inner">
+            <h3>{{ question.DiscussText }}</h3>
             <div class="quest-right-wrap">
               <div class="ques-comments">
-                <div class="commentbg">{{ question.commentCount }}</div>
+                <div class="commentbg">{{ question.DiscusCount }}</div>
               </div>
               <div class="ques-time">
                 <font-awesome-icon :icon="['far', 'clock']" class="iconn" />
-                <span>{{ question.time }}</span>
+                <span>{{ question.DiscusTime }}</span>
               </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </section>
@@ -28,105 +28,22 @@ export default {
   data() {
     return {
       axios: require("axios"),
-      userId: this.$route.params.id,
-      questions: [
-        {
-          name: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias? Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias?`,
-          commentCount: 123,
-          time: "24 min",
-        },
-        {
-          name: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias? Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias?`,
-          commentCount: 45,
-          time: "02 min",
-        },
-        {
-          name: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias? Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, debitis error dignissimos molestias?`,
-          commentCount: 79,
-          time: "49 min",
-        },
-      ],
+      questions: [],
     };
   },
-  methods: {
-    receiveFaq(fetching_data) {
-      fetching_data
-        .then((r) => r.json())
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("Error Fetching Data. Try Again");
-        });
-    },
-  },
-  beforeRouteEnter(to, from, next) {
+  mounted() {
+    // const catID = localStorage.getItem('Category-1');
     require("axios")
-      .get(process.env.VUE_APP_APIURL + "discussion_api/" + to.params.id)
+      .get(process.env.VUE_APP_APIURL + "discussion_api/" + this.$route.params.id)
       .then((response) => {
-        console.log(response)
-        // const res = response.data;
-
+        console.log("aaasasa",response.data.Message.Discussion)
+        this.questions = [ ...response.data.Message.Discussion ];
       })
       .catch((error) => {
         console.log("Error", error);
       });
-
-    // console.log(to.params.id);
-    console.log(from);
-    console.log(next);
-    // const fetching_data = fetch(
-    //   `${process.env.VUE_APP_APIURL}discussion_api`,
-    //   to.params.id
-    // ).then((r) => r.json())
-    //   .then((res) => {
-    //     console.log(res);
-    //   }); 
-    // next((vm) => {
-    //   vm.receiveFaq(fetching_data);
-    // });
-    /* const data = new FormData();
-    data.append('register_id', localStorage.getItem('UserID'));
-    require('axios').post(process.env.VUE_APP_APIURL + 'discussion_api', data, {
-      headers: {
-        'token': localStorage.getItem('UserToken'),
-      }
-    })
-    .then((response) => {
-      console.log(response)
-        const status = response.data.Status;
-          console.log("Result", response);
-          if(status == '200'){
-            // localStorage.setItem('UserID', response.data.Message.UserID);
-            // localStorage.setItem('UserToken', response.data.Message.UserToken);
-            // this.$router.push('/categories');
-          }
-          else if(status == '400') {
-            alert('Bad Request. Server issue occured.')
-          }
-          else if(status == '403') {
-            alert(response.data.Status_Detail)
-          }
-          else if(status == '422') {
-            alert(response.data.Status_Detail)
-          }
-
-
-
-
-      next(vm => {
-        vm.$emit('loggedIn');
-        // vm.categoryList = [ ...response.data.Message.Category ];
-      });
-    })
-    .catch((error) => {
-      console.log('Error', error);
-      // localStorage.removeItem('UserID');
-      // localStorage.removeItem('UserToken');
-      // next({ name: 'Login' });
-    }); */
   },
+
 };
 </script>
 
@@ -182,6 +99,7 @@ export default {
   border-radius: 2px;
   box-shadow: 0 1px 2px #c9cccd;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 .quest-right-wrap {
   min-width: 100px;
@@ -215,6 +133,7 @@ export default {
   color: #282828;
   font-size: 12px;
   line-height: 29px;
+  padding: 0 10px;
   border-left: 1px solid #e0e0e0;
   border-top: 1px solid #e0e0e0;
 }

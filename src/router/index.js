@@ -57,7 +57,7 @@ const routes = [
     beforeEnter: checkAuth,
   },
   {
-    path: '/discussion',
+    path: '/discussion/:id',
     name: 'Discussion',
     component: Discussion,
     beforeEnter: checkAuth,

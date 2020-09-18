@@ -31,7 +31,7 @@
             <router-link v-if="!loggedIn" class="account-link" to="/login">Login</router-link>
             <router-link v-if="loggedIn" class="account-link" to="/logout">Logout</router-link>
             <router-link class="account-link" to="/categories">Members Area</router-link>
-            <router-link v-if="loggedIn" class="account-link" to="/discussion">Discussion</router-link>
+            <!-- <router-link v-if="loggedIn" class="account-link" to="/discussion">Discussion</router-link> -->
           </div>
         </div>
       </div>

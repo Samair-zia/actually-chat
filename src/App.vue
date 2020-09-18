@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header :loggedIn="isLoggedIn"/>
+    <Header :loggedIn="isLoggedIn" @logMeOut="logMeOut"/>
       <router-view @loggedIn="updateLoggedInStatus"/>
     <Footer />
   </div>
@@ -26,6 +26,12 @@ export default {
     updateLoggedInStatus() {
       this.isLoggedIn = localStorage.getItem('UserToken');
     },
+    logMeOut() {
+      localStorage.removeItem('UserID');
+      localStorage.removeItem('UserToken');
+      this.isLoggedIn = false;
+      this.$router.push({ name: 'Home' });
+    }
   }
 }
 </script>

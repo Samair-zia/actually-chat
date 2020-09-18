@@ -9,7 +9,7 @@
         </div>
         <hr>
         <form @submit.prevent="addComment">
-          <input type="text" v-model="newComment" placeholder="Enter comment"> <br>
+          <textarea rows="5" v-model="newComment" placeholder="Enter comment"></textarea> <br>
           <button>Comment</button>
         </form>
       </div>
@@ -35,7 +35,7 @@ export default {
     addComment(){
       const data = new FormData();
       data.append('register_id', localStorage.getItem('UserID'));
-      data.append('discus_id', '7');
+      data.append('discus_id', this.$route.params.id);
       data.append('comments_text', this.newComment);
       require('axios').post(process.env.VUE_APP_APIURL + "post_comments_api", data, {
       headers: {
@@ -45,7 +45,11 @@ export default {
     .then(response => {
       const status = response.data.Status;
       console.log(status);
-      console.log("Result", response);
+      console.log("Result", response.data);
+      this.newComment= '';
+      this.$emit('commented');
+      // location.reload();
+      // this.$forceUpdate();
       // next(vm => {
       //   vm.data = response.data.Message.Discussion,
       //   vm.commentsData = [ ...response.data.Message.Comments]
@@ -89,7 +93,7 @@ export default {
   border-radius: 2px;
   background: #fff;
 }
-.comment-wrapper input{
+.comment-wrapper input, .comment-wrapper textarea{
   border: 1px solid #eee;
   box-shadow: 0 0 6px rgba(2, 3, 3, .1);
   font-size: 14px;

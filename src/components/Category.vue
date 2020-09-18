@@ -3,7 +3,7 @@
     <div class="container">
       <h3>Categories</h3>
       <div class="category-wrapper">
-        <router-link class="single-category" :to="{ name: 'DiscussionList', params: { id: category.CategoryId } }"  v-for="category in categories" :key="`category-${category.CategoryId}`">{{ category.CategoryName }} {{ category.CategoryId }} </router-link>
+        <router-link class="single-category" :to="{ name: 'DiscussionList', params: { id: category.CategoryId } }"  v-for="category in categories" :key="`category-${category.CategoryId}`">{{ category.CategoryName }} </router-link>
       </div>
     </div>
   </div>

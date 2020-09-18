@@ -4,18 +4,23 @@
       <div class="container">
         <h2>Discussions</h2>
         <div class="question-wrap">
-          <router-link v-for="(question, index) in questions" :key="index" :to="{ name: 'Discussion', params: { id: question.DiscussId } }" tag="div" class="question-inner">
-            <h3>{{ question.DiscussText }}</h3>
-            <div class="quest-right-wrap">
-              <div class="ques-comments">
-                <div class="commentbg">{{ question.DiscusCount }}</div>
+          <template v-if="questions.length">
+            <router-link v-for="(question, index) in questions" :key="index" :to="{ name: 'Discussion', params: { id: question.DiscussId } }" tag="div" class="question-inner">
+              <h3>{{ question.DiscussText }}</h3>
+              <div class="quest-right-wrap">
+                <div class="ques-comments">
+                  <div class="commentbg">{{ question.DiscusCount }}</div>
+                </div>
+                <div class="ques-time">
+                  <font-awesome-icon :icon="['far', 'clock']" class="iconn" />
+                  <span>{{ question.DiscusTime }}</span>
+                </div>
               </div>
-              <div class="ques-time">
-                <font-awesome-icon :icon="['far', 'clock']" class="iconn" />
-                <span>{{ question.DiscusTime }}</span>
-              </div>
-            </div>
-          </router-link>
+            </router-link>
+          </template>
+          <template v-else>
+            <p>No Questions Available</p>
+          </template>
         </div>
       </div>
     </section>
@@ -36,8 +41,9 @@ export default {
     require("axios")
       .get(process.env.VUE_APP_APIURL + "discussion_api/" + this.$route.params.id)
       .then((response) => {
-        console.log("aaasasa",response.data.Message.Discussion)
-        this.questions = [ ...response.data.Message.Discussion ];
+        if (response.data.Message.Discussion) {
+          this.questions = [ ...response.data.Message.Discussion ];
+        }
       })
       .catch((error) => {
         console.log("Error", error);

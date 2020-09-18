@@ -16,7 +16,7 @@
       </div>
     </div>
       <!-- <DiscussQuestion /> -->
-      <Comments :commentss="commentsData" />
+      <Comments :commentss="commentsData" @commented="newCommentHappened"/>
     </div>
   </div>
 </template>
@@ -35,6 +35,28 @@ export default {
     return{
       data: [],
       commentsData:[]
+    }
+  },
+  methods: {
+    newCommentHappened() {
+      const data = new FormData();
+      data.append('register_id', localStorage.getItem('UserID'));
+      data.append('discus_id', this.$route.params.id);
+      require('axios').post(process.env.VUE_APP_APIURL + "discussions_comments_api", data, {
+      headers: {
+        'token': localStorage.getItem('UserToken'),
+      }
+    })
+      .then(response => {
+          const status = response.data.Status;
+          console.log(status);
+          console.log("Result", response);
+          this.data = response.data.Message.Discussion,
+          this.commentsData = response.data.Message.Comments
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
     }
   },
   beforeRouteEnter(to, from, next) {

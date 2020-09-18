@@ -29,7 +29,7 @@
           </ul>
           <div class="account-wrap">
             <router-link v-if="!loggedIn" class="account-link" to="/login">Login</router-link>
-            <router-link v-if="loggedIn" class="account-link" to="/logout">Logout</router-link>
+            <a href="javascript:void(0)" v-if="loggedIn" class="account-link" @click="loggedOut">Logout</a>
             <router-link class="account-link" to="/categories">Members Area</router-link>
             <!-- <router-link v-if="loggedIn" class="account-link" to="/discussion">Discussion</router-link> -->
           </div>
@@ -67,6 +67,11 @@ export default {
         console.log("Error", error);
       });
   },
+  methods:{
+    loggedOut(){
+      this.$emit('logMeOut');
+    }
+  }
 }
 </script>
 

@@ -203,9 +203,9 @@ export default {
         .then((response) => {
           const status = response.data.Status;
           console.log(status);
-          console.log("Result", response);
+          console.log("Result", response.data);
           if(status == '200'){
-            this.$router.push('/categories');
+            this.$router.push('/');
           }
           else if(status == '400') {
             alert('Bad Request. Server issue occured.')

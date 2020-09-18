@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Vision from '../views/Vision.vue'
 import Team from '../views/Team.vue'
 import Privacy from '../views/Privacy.vue'
+import Cookie from '../views/Cookie.vue'
+import Agreement from '../views/Agreement.vue'
 import Login from '../views/Login.vue'
 import Categories from '../views/Categories.vue'
 import Discussion from '../views/Discussion.vue'
@@ -49,6 +51,16 @@ const routes = [
     path: '/privacy-policy',
     name: 'Privacy',
     component: Privacy
+  },
+  {
+    path: '/cookie-policy',
+    name: 'Cookie',
+    component: Cookie
+  },
+  {
+    path: '/members-agreements',
+    name: 'Agreement',
+    component: Agreement
   },
   {
     path: '/categories',

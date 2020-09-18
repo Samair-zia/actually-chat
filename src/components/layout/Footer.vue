@@ -23,7 +23,7 @@
       </div>
     </section>
     <section class="footer_sec4">
-      <p> Copyright 2020. Actually Health Chat. All Rights Reserved | <router-link to="/privacy-policy">Privacy Policy</router-link> </p>
+      <p> Copyright 2020. Actually Health Chat. All Rights Reserved | <router-link to="/privacy-policy">Privacy Policy</router-link> | <router-link to="/cookie-policy">Cookie Policy</router-link> </p>
     </section>
   </footer>
 </template>

@@ -77,7 +77,7 @@
                           </ValidationProvider>
                         </div>
                         <div class="login-footer">
-                          <p class="member-agree">
+                          <!-- <p class="member-agree">
                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
                             debitis vitae. Lorem ipsum dolor sit amet consectetur.
                             <a
@@ -86,15 +86,15 @@
                               aria-expanded="false"
                               aria-controls="collapseExample"
                             >Read More</a>
-                          </p>
-                          <p class="collapse member-agree" id="collapseExample">
+                          </p> -->
+                          <!-- <p class="collapse member-agree" id="collapseExample">
                             Lorem ipsum dolor sit amet consectetur
                             adipisicing elit. Accusamus enim harum commodi illum quas fugit? Nam, enim similique, culpa
                             itaque esse amet fugit laborum aliquid odio atque temporibus blanditiis tempora.
-                          </p>
+                          </p> -->
                           <ValidationProvider name="Accept" rules="required" v-slot="{ errors }">
                             <label>
-                              <input type="checkbox" v-model="signupFields.acceptTerms" /> I agree to members aggrement form
+                              <input type="checkbox" v-model="signupFields.acceptTerms" /> I agree to <router-link to="/members-agreements">members aggrement</router-link> form
                             </label> <br>
                             <span>{{ errors[0] }}</span><br>
                           </ValidationProvider>
@@ -130,10 +130,6 @@
                               <span>{{ errors[0] }}</span>
                             </div>
                           </ValidationProvider>
-                        <!-- <div class="login-single-field">
-                          <label>Email:</label>
-                          <input type="email" placeholder="Enter Email" />
-                        </div> -->
                          <ValidationProvider
                             name="Password"
                             rules="required|min:3|max:16"
@@ -151,13 +147,9 @@
                               <span>{{ errors[0] }}</span>
                             </div>
                           </ValidationProvider>
-                        <!-- <div class="login-single-field">
-                          <label>Password:</label>
-                          <input type="password" placeholder="Enter Password" />
-                        </div> -->
                       </div>
                       <div class="login-footer">
-                        <router-link to="/forgot-password" class="forgot">Forgot Password</router-link>
+                        <!-- <router-link to="/forgot-password" class="forgot">Forgot Password</router-link> -->
                         <button>Login</button>
                       </div>
                     </div>

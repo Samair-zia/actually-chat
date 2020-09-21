@@ -16,7 +16,12 @@
       </div>
     </div>
       <!-- <DiscussQuestion /> -->
-      <Comments :commentss="commentsData" @commented="newCommentHappened"/>
+      <div class="comments-link-wrap">
+        <Comments :commentss="commentsData" @commented="newCommentHappened"/>
+        <div>
+          <router-link to="/categories" class="goto-btn">Go to Health Conditions</router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -75,17 +80,7 @@ export default {
           next(vm => {
             vm.data = response.data.Message.Discussion,
             vm.commentsData = response.data.Message.Comments
-            });
-
-          // if(status == '200'){
-          //   this.$router.push('/categories');
-          // }
-          // else if(status == '400') {
-          //   alert('Bad Request. Server issue occured.')
-          // }
-          // else if(status == '422') {
-          //   alert(response.data.Message.register_email)
-          // }
+          });
         })
         .catch((error) => {
           console.log("Error", error);
@@ -158,5 +153,23 @@ export default {
 }
 .ques-time span{
   margin-left: 5px;
+}
+.comments-link-wrap{
+  display: flex;
+  justify-content: space-between;
+}
+.goto-btn{
+  display: inline-block;
+  width: 230px;
+  background-image: linear-gradient(to top,#ac0000,#c00000,#d40000,#e80000,#fd0000);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 700;
+  height: 37px;
+  border: none;
+  text-align: center;
+  padding: 5px 0;
 }
 </style>

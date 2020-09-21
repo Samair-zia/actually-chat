@@ -2,16 +2,16 @@
   <div class="comments">
     <section class="comment-sec-1">
       <div class="comment-wrapper">
+        <form @submit.prevent="addComment">
+          <textarea rows="4" v-model="newComment" placeholder="Enter comment"></textarea> <br>
+          <button>Comment</button>
+        </form>
+        <hr>
         <div class="comment-inner" v-for="(comment, index) in commentss" :key="index">
-          <h5 class="c-name">{{ comment.UserName }}</h5>
+          <h5 class="c-name">{{ comment.NickName }}</h5>
           <label class="c-time"> {{ comment.CommentsTime }} </label>
           <p class="single-comment">{{ comment.CommentsText }}</p>
         </div>
-        <hr>
-        <form @submit.prevent="addComment">
-          <textarea rows="5" v-model="newComment" placeholder="Enter comment"></textarea> <br>
-          <button>Comment</button>
-        </form>
       </div>
     </section>
   </div>
@@ -64,6 +64,10 @@ export default {
 </script>
 
 <style scoped>
+.comments{
+  max-width: 850px;
+  flex: 1;
+}
 .comment-sec-1{}
 .comment-wrapper{
   padding-bottom: 30px;

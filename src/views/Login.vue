@@ -20,12 +20,6 @@
                           <h3>Sign Up</h3>
                         </div>
                         <div class="login-body">
-                          <!-- <p v-if="errors.length">
-                          <b>Please correct the following error(s):</b>
-                          <ul>
-                            <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-                          </ul>
-                          </p>-->
                           <ValidationProvider
                             name="Name"
                             rules="required|min:1|max:25"
@@ -38,6 +32,22 @@
                                 placeholder="Enter name"
                                 name="register_name"
                                 v-model="signupFields.register_name"
+                              />
+                              <span>{{ errors[0] }}</span>
+                            </div>
+                          </ValidationProvider>
+                          <ValidationProvider
+                            name="User Name"
+                            rules="required|min:1|max:30"
+                            v-slot="{ errors }"
+                          >
+                            <div class="login-single-field">
+                              <label>User Name:</label>
+                              <input
+                                type="text"
+                                placeholder="Enter name"
+                                name="username"
+                                v-model="signupFields.username"
                               />
                               <span>{{ errors[0] }}</span>
                             </div>
@@ -173,6 +183,7 @@ export default {
       axios: require("axios"),
       signupFields: {
         register_name: "",
+        username: "",
         register_email: "",
         register_pswd: "",
         acceptTerms: null,

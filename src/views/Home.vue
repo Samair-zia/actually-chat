@@ -17,12 +17,6 @@
                 data-aos="fade-up"
                 data-aos-duration="1500"
               >{{ vision.visionText }}</p>
-              <router-link
-                to="/vision"
-                class="btn-vision"
-                data-aos="zoom-in"
-                data-aos-duration="1500"
-              >Read More</router-link>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">

@@ -34,7 +34,6 @@ export default {
   mounted() {
     console.log(process.env.VUE_APP_APIURL);
     this.axios
-      // .get("https://dev73.myprojectstaging.com/oread-health/web/teampage_api")
       .get(process.env.VUE_APP_APIURL + 'teampage_api')
       .then((response) => {
         this.members = [ ...response.data.Message.Team ];

@@ -65,22 +65,36 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-      const data = new FormData();
-      data.append('register_id', localStorage.getItem('UserID'));
-      data.append('discus_id', to.params.id);
-      require('axios').post(process.env.VUE_APP_APIURL + "discussions_comments_api", data, {
-      headers: {
-        'token': localStorage.getItem('UserToken'),
-      }
-    })
-      .then(response => {
-          const status = response.data.Status;
-          console.log(status);
-          console.log("Result", response);
-          next(vm => {
-            vm.data = response.data.Message.Discussion,
-            vm.commentsData = response.data.Message.Comments
-          });
+      require("axios")
+        .get(
+          process.env.VUE_APP_APIURL + "discussion_api/" + to.params.id
+        )
+        .then((response) => {
+          if (response.data.Message.Discussion) {
+            const discussID = [...response.data.Message.Discussion][0].DiscussId;
+            const data = new FormData();
+            data.append('register_id', localStorage.getItem('UserID'));
+            data.append('discus_id', discussID);
+            require('axios').post(process.env.VUE_APP_APIURL + "discussions_comments_api", data, {
+              headers: {
+                'token': localStorage.getItem('UserToken'),
+              }
+            })
+            .then(response => {
+                const status = response.data.Status;
+                console.log(status);
+                console.log("Result", response);
+                next(vm => {
+                  vm.data = response.data.Message.Discussion,
+                  vm.commentsData = response.data.Message.Comments
+                });
+              })
+              .catch((error) => {
+                console.log("Error", error);
+              });
+          } else {
+            alert('Nothing to discuss.')
+          }
         })
         .catch((error) => {
           console.log("Error", error);

@@ -4,7 +4,7 @@
       <div class="comment-wrapper">
         <form @submit.prevent="addComment">
           <textarea rows="4" v-model="newComment" placeholder="Enter comment"></textarea> <br>
-          <button>Comment</button>
+          <button>Send</button>
         </form>
         <hr>
         <div class="comment-inner" v-for="(comment, index) in commentss" :key="index">

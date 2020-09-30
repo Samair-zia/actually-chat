@@ -11,7 +11,8 @@ import Categories from '../views/Categories.vue'
 import Discussion from '../views/Discussion.vue'
 import DiscussionList from '../views/DiscussionList.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
-import vueConfig from '../../vue.config'
+import Careers from '../views/Careers.vue'
+import Advertisement from '../views/Advertisement.vue'
 
 Vue.use(VueRouter);
 
@@ -69,6 +70,18 @@ const routes = [
     beforeEnter: checkAuth,
   },
   {
+    path: '/careers',
+    name: 'Careers',
+    component: Careers,
+    beforeEnter: checkAuth,
+  },
+  {
+    path: '/advertisement',
+    name: 'Advertisement',
+    component: Advertisement,
+    beforeEnter: checkAuth,
+  },
+  {
     path: '/discussion/:id',
     name: 'Discussion',
     component: Discussion,
@@ -89,7 +102,6 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: vueConfig.publicPath,
   scrollBehavior: () => Object.assign({}, { x: 0, y: 0 }),
   routes
 })

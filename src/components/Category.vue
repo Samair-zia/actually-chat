@@ -3,7 +3,14 @@
     <div class="container">
       <h3>Categories</h3>
       <div class="category-wrapper">
-        <router-link class="single-category" :to="{ name: 'DiscussionList', params: { id: category.CategoryId } }"  v-for="category in categories" :key="`category-${category.CategoryId}`">{{ category.CategoryName }} </router-link>
+        <router-link
+          class="single-category"
+          :class="category.CategoryName.search('COVID') === -1 ? '' : 'covid-category'"
+          :to="{ name: 'Discussion', params: { id: category.CategoryId } }"
+          v-for="category in categories"
+          :key="`category-${category.CategoryId}`"
+          >{{ category.CategoryName }}
+        </router-link>
       </div>
     </div>
   </div>
@@ -11,33 +18,35 @@
 
 <script>
 export default {
-  name: 'Category',
+  name: "Category",
   props: {
     categories: {
       required: true,
       type: Array,
     },
-  },
-}
+  }
+};
 </script>
 
 <style scoped>
-.category{
+.category {
   padding: 70px 0;
 }
-.category h3{
+.category h3 {
   font-size: 24px;
   font-weight: 700;
   color: #282828;
   line-height: 1.2;
   margin-bottom: 25px;
 }
-.category-wrapper{
+.category-wrapper {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  max-height: 440px;
 }
-.single-category{
-  font-family: 'Poppins', sans-serif;
+.single-category {
+  font-family: "Poppins", sans-serif;
   display: inline-block;
   background: #f4f4f4;
   color: #000;
@@ -53,21 +62,39 @@ export default {
   z-index: 1;
   transition: all 0.3s ease-in-out;
 }
-.single-category::before{
-  content: '';
+.single-category::before {
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
-  background: linear-gradient(to top, #ac0000, #c00000, #d40000, #e80000, #fd0000);
+  background: linear-gradient(
+    to top,
+    #ac0000,
+    #c00000,
+    #d40000,
+    #e80000,
+    #fd0000
+  );
   width: 100%;
   height: 0;
   z-index: -1;
   transition: all 0.3s ease-in-out;
 }
-.single-category:hover::before{
+.single-category:hover::before {
   height: 100%;
 }
-.single-category:hover{
+.single-category:hover {
   color: #fff;
+}
+.covid-category{
+  background:linear-gradient(
+    to top,
+    #ac0000,
+    #c00000,
+    #d40000,
+    #e80000,
+    #fd0000
+  );
+  font-weight: 600;
 }
 </style>

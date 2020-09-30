@@ -207,4 +207,27 @@ export default {
     font-size: 24px;
   }
 }
+
+@media only screen and (max-width:575px) {
+  .index-sec-1{
+    background-position: 88%;
+    min-height: 240px;
+  }
+  .main-inner-wrap {
+    max-width: 100%;
+    background: rgb(255 255 255 / 85%);
+    padding: 15px 10px;
+  }
+  .main-inner-wrap h1{
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+  .index-sec-2 {
+    padding: 40px 0;
+  }
+  .para-text {
+    text-align: left;
+    margin: 20px 0px 0;
+  }
+}
 </style>

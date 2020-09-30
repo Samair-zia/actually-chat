@@ -104,7 +104,7 @@
                           </p> -->
                           <ValidationProvider name="Accept" rules="required" v-slot="{ errors }">
                             <label>
-                              <input type="checkbox" v-model="signupFields.acceptTerms" /> I agree to <router-link to="/members-agreements">members aggrement</router-link> form
+                              <input type="checkbox" v-model="signupFields.acceptTerms" /> I agree to <router-link to="/members-agreements">members agreement</router-link> form
                             </label> <br>
                             <span>{{ errors[0] }}</span><br>
                           </ValidationProvider>
@@ -200,7 +200,7 @@ export default {
       console.log(data);
       this.axios
         .post(
-          "https://dev73.myprojectstaging.com/oread-health/web/register_api",
+          process.env.VUE_APP_APIURL + 'register_api',
           data
         )
         .then((response) => {
@@ -225,7 +225,7 @@ export default {
       const data = new FormData(this.$refs.formLogin);
       this.axios
         .post(
-          "https://dev73.myprojectstaging.com/oread-health/web/login_api",
+          process.env.VUE_APP_APIURL + 'login_api',
           data
         )
         .then((response) => {

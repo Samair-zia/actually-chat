@@ -2,10 +2,22 @@
   <div class="discussion-list">
     <section class="dl-sec-1">
       <div class="container">
-        <h2>Discussions</h2>
+        <template v-if="questions.length">
+          <h2>{{ this.categoryName }}</h2>
+        </template>
+        <template v-else>
+          <h2>Discussion</h2>
+        </template>
         <div class="question-wrap">
           <template v-if="questions.length">
-            <router-link v-for="(question, index) in questions" :key="index" :to="{ name: 'Discussion', params: { id: question.DiscussId } }" tag="div" class="question-inner">
+            <router-link
+              v-for="(question, index) in questions"
+              :key="index"
+              :to="{ name: 'Discussion', params: { id: question.DiscussId } }"
+              tag="div"
+              class="question-inner"
+            >
+              <!-- <h3>{{ question.CategoryName }}</h3> -->
               <h3>{{ question.DiscussText }}</h3>
               <div class="quest-right-wrap">
                 <div class="ques-comments">
@@ -34,22 +46,26 @@ export default {
     return {
       axios: require("axios"),
       questions: [],
+      categoryName: "",
     };
   },
   mounted() {
     // const catID = localStorage.getItem('Category-1');
     require("axios")
-      .get(process.env.VUE_APP_APIURL + "discussion_api/" + this.$route.params.id)
+      .get(
+        process.env.VUE_APP_APIURL + "discussion_api/" + this.$route.params.id
+      )
       .then((response) => {
         if (response.data.Message.Discussion) {
-          this.questions = [ ...response.data.Message.Discussion ];
+          this.questions = [...response.data.Message.Discussion];
+          // console.log(this.questions[0].CategoryName)
+          this.categoryName = this.questions[0].CategoryName;
         }
       })
       .catch((error) => {
         console.log("Error", error);
       });
   },
-
 };
 </script>
 

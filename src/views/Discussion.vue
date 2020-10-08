@@ -2,6 +2,7 @@
   <div class="discussion">
     <div class="container">
       <div class="question-wrap">
+      <h2>{{ categoryName }}</h2>
       <div class="question-inner" v-for="(texts, index) in data" :key="index">
         <h3>{{ texts.DiscussText }}</h3>
         <div class="quest-right-wrap">
@@ -39,7 +40,9 @@ export default {
   data(){
     return{
       data: [],
-      commentsData:[]
+      commentsData:[],
+      categoryName: "",
+
     }
   },
   methods: {
@@ -71,7 +74,8 @@ export default {
         )
         .then((response) => {
           if (response.data.Message.Discussion) {
-            const discussID = [...response.data.Message.Discussion][0].DiscussId;
+            const discussID = [...response.data.Message.Discussion][0].CategoryId;
+            console.log('i am discuss Id : ' + discussID)
             const data = new FormData();
             data.append('register_id', localStorage.getItem('UserID'));
             data.append('discus_id', discussID);
@@ -87,6 +91,7 @@ export default {
                 next(vm => {
                   vm.data = response.data.Message.Discussion,
                   vm.commentsData = response.data.Message.Comments
+                  vm.categoryName = vm.data[0].CategoryName;
                 });
               })
               .catch((error) => {
@@ -109,6 +114,31 @@ export default {
 }
 .question-wrap{
   padding: 30px 0;
+}
+.question-wrap h2{
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1.2;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  position: relative;
+}
+.question-wrap h2::before {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 30px;
+  background-image: linear-gradient(
+    to top,
+    #ac0000,
+    #c00000,
+    #d40000,
+    #e80000,
+    #fd0000
+  );
+  bottom: -4px;
+  left: 0;
 }
 .question-wrap h3{
   font-size: 18px;

@@ -96,5 +96,6 @@ export default {
     #fd0000
   );
   font-weight: 600;
+  color: #fff;
 }
 </style>

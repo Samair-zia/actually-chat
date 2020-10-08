@@ -11,6 +11,17 @@
           <h5 class="c-name">{{ comment.NickName }}</h5>
           <label class="c-time"> {{ comment.CommentsTime }} </label>
           <p class="single-comment">{{ comment.CommentsText }}</p>
+          <button data-toggle="collapse" :data-target="'#collapse' + index" aria-expanded="false">Reply</button>
+          <!-- <button  @click="toggleCollapsation" >Reply</button> -->
+          <!-- <p v-show="isCollapsed">Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio modi, dicta iste</p> -->
+
+          <div class="collapse" :id="'collapse' + index">
+            <div class="mt-3">
+              <textarea rows="4" placeholder="Enter comment"></textarea> <br>
+              <button>Send</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -28,13 +39,15 @@ export default {
   },
   data(){
     return{
-      newComment: ''
+      newComment: '',
+      // isCollapsed: false
     }
   },
   methods: {
     addComment(){
       const data = new FormData();
       data.append('register_id', localStorage.getItem('UserID'));
+      console.log(this.$route.params.id)
       data.append('discus_id', this.$route.params.id);
       data.append('comments_text', this.newComment);
       require('axios').post(process.env.VUE_APP_APIURL + "post_comments_api", data, {
@@ -56,9 +69,12 @@ export default {
       // });
       })
       .catch((error) => {
-        console.log("Error", error);
+        console.log("Error from comments: ", error);
       });
-    }
+    },
+    // toggleCollapsation() {
+    //     this.isCollapsed = !this.isCollapsed;
+    //   }
   }
 }
 </script>
@@ -107,7 +123,7 @@ export default {
   padding: 7px;
   color: #000;
 }
-.comment-wrapper button{
+.comment-wrapper button, .comment-inner button{
   width: 145px;
   background-image: linear-gradient(0deg, #ac0000, #c00000, #d40000, #e80000, #fd0000);
   color: #fff;

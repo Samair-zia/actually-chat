@@ -1,7 +1,7 @@
 <template>
   <div class="advertisement">
     <div class="container">
-      <h1>Advertisement</h1>
+      <h1>Coming Soon</h1>
     </div>
   </div>
 </template>
@@ -13,5 +13,11 @@ export default {
 </script>
 
 <style scoped>
-
+h1{
+  color: #000;
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    padding: 100px;
+}
 </style>

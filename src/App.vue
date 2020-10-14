@@ -17,8 +17,6 @@ export default {
   },
   data(){
     return{
-      // nonHeaderPages: ['views.login'],
-      // nonFooterPages: ['views.login'],
       isLoggedIn: localStorage.getItem('UserToken'),
     }
   },

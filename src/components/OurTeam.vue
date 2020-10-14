@@ -2,7 +2,7 @@
   <section class="team-sec">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-sm-6 col-md-6 col-lg-6 mb-5" v-for="(member , index) in members" :key="index">
+        <div class="col-sm-12 col-md-12 col-lg-6 mb-5" v-for="(member , index) in members" :key="index">
           <div class="single-member-wrap" data-aos="fade-down" data-aos-duration="1800">
             <div class="sm-img-wrap">
               <img :src="baseURL + member.TeamMemberImage" class="img-fluid" alt="">
@@ -37,8 +37,8 @@ export default {
       .get(process.env.VUE_APP_APIURL + 'teampage_api')
       .then((response) => {
         this.members = [ ...response.data.Message.Team ];
-        const res = response.data.Message.Team;
-        console.log(res);
+        // const res = response.data.Message.Team;
+        // console.log(res);
       })
       .catch((error) => {
         console.log("Error", error);
@@ -89,5 +89,17 @@ export default {
   font-size: 14px;
   padding: 25px;
   line-height: 2;
+}
+
+@media only screen and (max-width:575px) {
+.sm-img-inner {
+  margin-left: 15px;
+}
+.sm-img-wrap h5{
+  font-size: 16px;
+}
+.sm-desc p{
+  padding: 20px 10px;
+}
 }
 </style>

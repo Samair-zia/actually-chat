@@ -81,4 +81,10 @@ export default {
   font-weight: 500;
   margin: 90px 90px 0;
 }
+@media only screen and (max-width:575px) {
+  .para-text {
+    text-align: left;
+    margin: 20px 0px 0;
+  }
+}
 </style>

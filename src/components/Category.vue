@@ -98,4 +98,15 @@ export default {
   font-weight: 600;
   color: #fff;
 }
+
+@media only screen and (max-width:575px) {
+  .category h3 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .category-wrapper {
+    flex-wrap: nowrap;
+    max-height: 100%;
+  }
+}
 </style>

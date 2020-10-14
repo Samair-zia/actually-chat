@@ -197,7 +197,7 @@ export default {
   methods: {
     signup() {
       const data = new FormData(this.$refs.formHTML);
-      console.log(data);
+      // console.log(data);
       this.axios
         .post(
           process.env.VUE_APP_APIURL + 'register_api',
@@ -205,8 +205,8 @@ export default {
         )
         .then((response) => {
           const status = response.data.Status;
-          console.log(status);
-          console.log("Result", response.data);
+          // console.log(status);
+          // console.log("Result", response.data);
           if(status == '200'){
             this.$router.push('/');
           }
@@ -230,7 +230,7 @@ export default {
         )
         .then((response) => {
           const status = response.data.Status;
-          console.log("Result", response);
+          // console.log("Result", response);
           if(status == '200'){
             localStorage.setItem('UserID', response.data.Message.UserID);
             localStorage.setItem('UserToken', response.data.Message.UserToken);
@@ -461,5 +461,11 @@ export default {
   transform: translate3d(0, -50%, 35px) perspective(100px);
   z-index: 20;
   display: block;
+}
+
+@media only screen and (max-width:575px) {
+.login-inner-wrap {
+  padding: 10px 15px;
+}
 }
 </style>

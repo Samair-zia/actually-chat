@@ -28,7 +28,7 @@ export default {
       }
     })
     .then((response) => {
-      console.log(response)
+      // console.log(response)
       // console.log(response.data.Message.Category[])
       next(vm => {
         vm.$emit('loggedIn');
@@ -36,7 +36,7 @@ export default {
         vm.categoryList.forEach(element => {
           localStorage.setItem(`Category-${element.CategoryId}`, element.CategoryId);
         });
-        console.log(localStorage.getItem('Category-2'));
+        // console.log(localStorage.getItem('Category-2'));
         // console.log("blahh",vm.categoryList[1].CategoryId)
         
         vm.catId = vm.categoryList[0].CategoryId;

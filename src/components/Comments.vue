@@ -80,7 +80,7 @@ export default {
         .then((response) => {
           const status = response.data.Status;
           console.log(status);
-          console.log("Result", response.data);
+          // console.log("Result", response.data);
           this.newComment = "";
           this.$emit("commented");
         })
@@ -102,7 +102,7 @@ export default {
         .then((response) => {
           const status = response.data.Status;
           console.log(status);
-          console.log("Result from reply", response.data);
+          // console.log("Result from reply", response.data);
           this.$emit("commented");
         })
         .catch((error) => {

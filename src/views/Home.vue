@@ -78,7 +78,7 @@ export default {
       .get(process.env.VUE_APP_APIURL + 'homepage_api')
       .then((response) => {
         const res = response.data.Message;
-        console.log(res);
+        // console.log(res);
         this.banner.bannerText = res.Banner.BannerText;
         this.vision.visionText = res.Vision.VisionText;
         this.vision.visionSubtext = res.Vision.VisionSubText;

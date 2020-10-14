@@ -56,9 +56,9 @@ export default {
       }
     })
       .then(response => {
-          const status = response.data.Status;
-          console.log(status);
-          console.log("Result", response);
+          // const status = response.data.Status;
+          // console.log(status);
+          // console.log("Result", response);
           this.data = response.data.Message.Discussion,
           this.commentsData = response.data.Message.Comments
         })
@@ -75,7 +75,7 @@ export default {
         .then((response) => {
           if (response.data.Message.Discussion) {
             const discussID = [...response.data.Message.Discussion][0].CategoryId;
-            console.log('i am discuss Id : ' + discussID)
+            // console.log('i am discuss Id : ' + discussID)
             const data = new FormData();
             data.append('register_id', localStorage.getItem('UserID'));
             data.append('discus_id', discussID);
@@ -85,9 +85,9 @@ export default {
               }
             })
             .then(response => {
-                const status = response.data.Status;
-                console.log(status);
-                console.log("Result", response);
+                // const status = response.data.Status;
+                // console.log(status);
+                // console.log("Result", response);
                 next(vm => {
                   vm.data = response.data.Message.Discussion,
                   vm.commentsData = response.data.Message.Comments
@@ -215,5 +215,26 @@ export default {
   border: none;
   text-align: center;
   padding: 5px 0;
+}
+
+@media only screen and (max-width:575px) {
+.question-wrap h3{
+  font-size: 18px;
+  font-weight: 500;
+  color: #282828;
+  line-height: 1.5;
+  font-family: Poppins,sans-serif;
+  padding: 10px;
+}
+.ques-comments {
+  padding: 15px 0;
+}
+.comments-link-wrap {
+  flex-wrap: wrap;
+}
+.comments {
+  order: 2;
+  margin-top: 10px;
+}
 }
 </style>

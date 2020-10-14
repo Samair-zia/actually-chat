@@ -3,15 +3,15 @@
     <div class="header-top">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-sm-6 col-md-4 col-lg-4">
+          <div class="col-sm-4 col-md-4 col-lg-4">
             <div class="head-top-left-wrap">
               <a href="mailto:info@actuallyhc.com" class="hide-on-mob"><i class="fas fa-envelope"></i>Email: {{ headerEmail }}</a>
             </div>
           </div>
-          <div class="col-sm-6 col-md-4 col-lg-4 text-center">
+          <div class="col-sm-4 col-md-4 col-lg-4 text-center">
             <router-link to="/" class="logo-wrap"><img src="@/assets/images/logo.png" class="img-fluid" alt=""></router-link>
           </div>
-          <div class="col-sm-6 col-md-4 col-lg-4">
+          <div class="col-sm-4 col-md-4 col-lg-4">
             <div class="head-top-right-wrap">
               <a href="#!" class="hide-on-mob"><i class="fas fa-phone-alt"></i>Contact: {{ headerPhone }}</a>
             </div>
@@ -185,6 +185,27 @@ header{
   font-size: 16px;
 }
 
+@media only screen and (max-width:828px) {
+  .logo-wrap img {
+    max-width: 170px;
+}
+  .header-bottom {
+    padding: 10px 0;
+}
+.main-nav .main-nav-li{
+    margin-right: 20px;
+}
+.main-nav .main-nav-li .main-nav-link{
+    font-size: 16px;
+}
+.account-wrap .account-link {
+    font-size: 16px;
+    margin-left: 20px;
+}
+.head-top-left-wrap a, .head-top-right-wrap a {
+    font-size: 14px;
+}
+}
 @media only screen and (max-width:575px) {
   .header-top{
     padding: 5px 0;

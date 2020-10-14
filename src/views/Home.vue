@@ -80,7 +80,6 @@ export default {
         const res = response.data.Message;
         console.log(res);
         this.banner.bannerText = res.Banner.BannerText;
-
         this.vision.visionText = res.Vision.VisionText;
         this.vision.visionSubtext = res.Vision.VisionSubText;
         // console.log(this.banner.bannerText)

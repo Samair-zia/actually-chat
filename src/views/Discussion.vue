@@ -2,26 +2,33 @@
   <div class="discussion">
     <div class="container">
       <div class="question-wrap">
-      <h2>{{ categoryName }}</h2>
-      <div class="question-inner" v-for="(texts, index) in data" :key="index">
-        <h3>{{ texts.DiscussText }}</h3>
-        <div class="quest-right-wrap">
-          <div class="ques-comments">
-            <div class="commentbg">{{ texts.DiscusCount }}</div>
-          </div>
-          <div class="ques-time">
-            <font-awesome-icon :icon="['far', 'clock']" class="iconn" />
-            <span>{{ texts.DiscusTime }}</span>
-          </div>
+        <div class="mb-3">
+          <router-link to="/categories" class="goto-btn"
+            >Go to Health Conditions</router-link
+          >
         </div>
+        <h2>{{ categoryName }}</h2>
+        <!-- <div class="question-inner" v-for="(texts, index) in data" :key="index">
+          <h3>{{ texts.DiscussText }}</h3>
+          <div class="quest-right-wrap">
+            <div class="ques-comments">
+              <div class="commentbg">{{ texts.DiscusCount }}</div>
+            </div>
+            <div class="ques-time">
+              <font-awesome-icon :icon="['far', 'clock']" class="iconn" />
+              <span>{{ texts.DiscusTime }}</span>
+            </div>
+          </div>
+        </div> -->
       </div>
-    </div>
       <!-- <DiscussQuestion /> -->
       <div class="comments-link-wrap">
-        <Comments :commentss="commentsData" @commented="newCommentHappened"/>
-        <div>
-          <router-link to="/categories" class="goto-btn">Go to Health Conditions</router-link>
-        </div>
+        <Comments
+          :commentss="commentsData"
+          :discuss_id="discuss_id"
+          @commented="newCommentHappened"
+        />
+        
       </div>
     </div>
   </div>
@@ -29,93 +36,93 @@
 
 <script>
 // import DiscussQuestion from '@/components/DiscussQuestion.vue'
-import Comments from '@/components/Comments.vue'
+import Comments from "@/components/Comments.vue";
 
 export default {
-  name: 'Discussion',
+  name: "Discussion",
   components: {
     // DiscussQuestion,
-    Comments
+    Comments,
   },
-  data(){
-    return{
+  data() {
+    return {
       data: [],
-      commentsData:[],
+      commentsData: [],
       categoryName: "",
-
-    }
+      discuss_id: null,
+    };
   },
   methods: {
     newCommentHappened() {
       const data = new FormData();
-      data.append('register_id', localStorage.getItem('UserID'));
-      data.append('discus_id', this.$route.params.id);
-      require('axios').post(process.env.VUE_APP_APIURL + "discussions_comments_api", data, {
-      headers: {
-        'token': localStorage.getItem('UserToken'),
-      }
-    })
-      .then(response => {
+      data.append("register_id", localStorage.getItem("UserID"));
+      data.append("discus_id", this.discuss_id);
+      require("axios")
+        .post(process.env.VUE_APP_APIURL + "discussions_comments_api", data, {
+          headers: {
+            token: localStorage.getItem("UserToken"),
+          },
+        })
+        .then((response) => {
           // const status = response.data.Status;
           // console.log(status);
           // console.log("Result", response);
           this.data = response.data.Message.Discussion,
-          this.commentsData = response.data.Message.Comments
+          this.commentsData = response.data.Message.Comments;
         })
         .catch((error) => {
           console.log("Error", error);
         });
-    }
+    },
   },
   beforeRouteEnter(to, from, next) {
-      require("axios")
-        .get(
-          process.env.VUE_APP_APIURL + "discussion_api/" + to.params.id
-        )
-        .then((response) => {
-          if (response.data.Message.Discussion) {
-            const discussID = [...response.data.Message.Discussion][0].CategoryId;
-            // console.log('i am discuss Id : ' + discussID)
-            const data = new FormData();
-            data.append('register_id', localStorage.getItem('UserID'));
-            data.append('discus_id', discussID);
-            require('axios').post(process.env.VUE_APP_APIURL + "discussions_comments_api", data, {
-              headers: {
-                'token': localStorage.getItem('UserToken'),
+    require("axios")
+      .get(process.env.VUE_APP_APIURL + "discussion_api/" + to.params.id)
+      .then((response) => {
+        if (response.data.Message.Discussion) {
+          const discuss_id = [...response.data.Message.Discussion][0].DiscussId;
+          const data = new FormData();
+          data.append("register_id", localStorage.getItem("UserID"));
+          data.append("discus_id", discuss_id);
+          require("axios")
+            .post(
+              process.env.VUE_APP_APIURL + "discussions_comments_api", data, 
+              {
+                headers: {
+                  token: localStorage.getItem("UserToken"),
+                },
               }
-            })
-            .then(response => {
-                // const status = response.data.Status;
-                // console.log(status);
-                // console.log("Result", response);
-                next(vm => {
-                  vm.data = response.data.Message.Discussion,
-                  vm.commentsData = response.data.Message.Comments
-                  vm.categoryName = vm.data[0].CategoryName;
-                });
-              })
-              .catch((error) => {
-                console.log("Error", error);
+            )
+            .then((response) => {
+              next(vm => {
+                vm.data = response.data.Message.Discussion,
+                vm.discuss_id = discuss_id;
+                vm.commentsData = response.data.Message.Comments;
+                vm.categoryName = vm.data[0].CategoryName;
               });
-          } else {
-            alert('Nothing to discuss.')
-          }
-        })
-        .catch((error) => {
-          console.log("Error", error);
-        });
-  }
-}
+            })
+            .catch((error) => {
+              console.log("Error", error);
+            });
+        } else {
+          alert("Nothing to discuss.");
+        }
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  },
+};
 </script>
 
 <style scoped>
-.discussion{
+.discussion {
   background: #ecf0f1;
 }
-.question-wrap{
+.question-wrap {
   padding: 30px 0;
 }
-.question-wrap h2{
+.question-wrap h2 {
   font-size: 24px;
   font-weight: 700;
   color: #000;
@@ -140,15 +147,15 @@ export default {
   bottom: -4px;
   left: 0;
 }
-.question-wrap h3{
+.question-wrap h3 {
   font-size: 18px;
   font-weight: 500;
   color: #282828;
   line-height: 1.5;
-  font-family: Poppins,sans-serif;
+  font-family: Poppins, sans-serif;
   padding: 20px;
 }
-.question-inner{
+.question-inner {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -156,11 +163,11 @@ export default {
   border-radius: 2px;
   box-shadow: 0 1px 2px #c9cccd;
 }
-.quest-right-wrap{
+.quest-right-wrap {
   min-width: 100px;
   text-align: center;
 }
-.ques-comments{
+.ques-comments {
   padding: 20px 0;
   border-left: 1px solid #e0e0e0;
 }
@@ -173,8 +180,8 @@ export default {
   font-size: 14px;
   position: relative;
 }
-.commentbg::after{
-  content: '';
+.commentbg::after {
+  content: "";
   width: 11px;
   height: 11px;
   background-color: #bdc3c7;
@@ -184,7 +191,7 @@ export default {
   margin-bottom: -5px;
   transform: rotate(45deg);
 }
-.ques-time{
+.ques-time {
   color: #282828;
   font-size: 12px;
   line-height: 29px;
@@ -192,20 +199,26 @@ export default {
   border-left: 1px solid #e0e0e0;
   border-top: 1px solid #e0e0e0;
 }
-.iconn{
-
+.iconn {
 }
-.ques-time span{
+.ques-time span {
   margin-left: 5px;
 }
-.comments-link-wrap{
+.comments-link-wrap {
   display: flex;
   justify-content: space-between;
 }
-.goto-btn{
+.goto-btn {
   display: inline-block;
   width: 230px;
-  background-image: linear-gradient(to top,#ac0000,#c00000,#d40000,#e80000,#fd0000);
+  background-image: linear-gradient(
+    to top,
+    #ac0000,
+    #c00000,
+    #d40000,
+    #e80000,
+    #fd0000
+  );
   color: #fff;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
@@ -217,24 +230,24 @@ export default {
   padding: 5px 0;
 }
 
-@media only screen and (max-width:575px) {
-.question-wrap h3{
-  font-size: 18px;
-  font-weight: 500;
-  color: #282828;
-  line-height: 1.5;
-  font-family: Poppins,sans-serif;
-  padding: 10px;
-}
-.ques-comments {
-  padding: 15px 0;
-}
-.comments-link-wrap {
-  flex-wrap: wrap;
-}
-.comments {
-  order: 2;
-  margin-top: 10px;
-}
+@media only screen and (max-width: 575px) {
+  .question-wrap h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #282828;
+    line-height: 1.5;
+    font-family: Poppins, sans-serif;
+    padding: 10px;
+  }
+  .ques-comments {
+    padding: 15px 0;
+  }
+  .comments-link-wrap {
+    flex-wrap: wrap;
+  }
+  .comments {
+    order: 2;
+    margin-top: 10px;
+  }
 }
 </style>

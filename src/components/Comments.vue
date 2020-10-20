@@ -6,7 +6,7 @@
           <textarea
             name="comments_text"
             rows="4"
-            placeholder="Enter comment"
+            placeholder="Share your experiences, questions and responses"
             required
           ></textarea>
           <br />
@@ -64,12 +64,15 @@ export default {
       required: true,
       type: Array,
     },
+    discuss_id: {
+      require: true,
+    },
   },
   methods: {
     addComment(event) {
       const data = new FormData(event.target);
       data.append("register_id", localStorage.getItem("UserID"));
-      data.append("discus_id", this.$route.params.id);
+      data.append("discus_id", this.discuss_id);
       data.append("parent_comment_id", 0);
       require("axios")
         .post(process.env.VUE_APP_APIURL + "post_comments_api", data, {
@@ -92,7 +95,7 @@ export default {
     addReply(event) {
       const data = new FormData(event.target);
       data.append("register_id", localStorage.getItem("UserID"));
-      data.append("discus_id", this.$route.params.id);
+      data.append("discus_id", this.discuss_id);
       require("axios")
         .post(process.env.VUE_APP_APIURL + "post_comments_api", data, {
           headers: {
@@ -181,14 +184,7 @@ export default {
 }
 .comment-inner button {
   width: 95px;
-  background-image: linear-gradient(
-    0deg,
-    #ac0000,
-    #c00000,
-    #d40000,
-    #e80000,
-    #fd0000
-  );
+  background: #404040;
   color: #fff;
   font-family: Poppins, sans-serif;
   font-size: 16px;
@@ -197,6 +193,7 @@ export default {
   height: 30px;
   border: none;
   margin-top: 20px;
+  font-style: italic;
 }
 .ml60 {
   margin-left: 60px;

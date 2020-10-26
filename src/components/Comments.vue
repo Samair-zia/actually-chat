@@ -184,12 +184,12 @@ export default {
 }
 .comment-inner button {
   width: 95px;
-  background: #404040;
-  color: #fff;
+  background: #d4af37;
+  color: #000;
   font-family: Poppins, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
-  font-weight: 700;
+  font-weight: 500;
   height: 30px;
   border: none;
   margin-top: 20px;

@@ -4,7 +4,7 @@
       <div class="question-wrap">
         <div class="mb-3">
           <router-link to="/categories" class="goto-btn"
-            >Go to Health Conditions</router-link
+            >Go to Health Categories</router-link
           >
         </div>
         <h2>{{ categoryName }}</h2>

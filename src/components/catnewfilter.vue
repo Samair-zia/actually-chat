@@ -1,7 +1,10 @@
 <template>
+
+<!-- working with filter search  -->
   <div class="category">
     <div class="container">
-      <h3>Health Categories</h3>
+      <h3>Categories</h3>
+      <input type="search" v-model="searchedCategory" @input="filterCategories">
       <div class="category-wrapper">
         <router-link
           class="single-category"
@@ -16,7 +19,7 @@
             (category.CategoryName.search('Yoga and massage therapy') === -1 ? '' : 'yamt-category'),
           ]"
           :to="{ name: 'Discussion', params: { id: category.CategoryId } }"
-          v-for="category in categories"
+          v-for="category in filteredCategories"
           :key="`category-${category.CategoryId}`"
           >{{ category.CategoryName }}
         </router-link>
@@ -33,7 +36,23 @@ export default {
       required: true,
       type: Array,
     },
-  }
+  },
+  data() {
+    return {
+      searchedCategory: '',
+      filteredCategories: [],
+    };
+  },
+  watch: {
+    categories() {
+      this.filterCategories();
+    },
+  },
+  methods: {
+    filterCategories() {
+      this.filteredCategories = this.categories.filter(category => category.CategoryName.toLowerCase().search(this.searchedCategory) !== -1);
+    },
+  },
 };
 </script>
 

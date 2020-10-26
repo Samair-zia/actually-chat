@@ -33,7 +33,7 @@
             <a class="account-link dropdown" href="javascript:void(0)">
              <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Members Area</span>
              <div class="dropdown-menu custom-drop-menu" aria-labelledby="dropdownMenuButton">
-              <router-link class="dropdown-item" to="/categories">Health Conditions</router-link>
+              <router-link class="dropdown-item" to="/categories">Health Categories</router-link>
               <router-link class="dropdown-item" to="/careers">Careers</router-link>
               <router-link class="dropdown-item" to="/advertisement">Advertisement</router-link>
             </div>

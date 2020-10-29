@@ -1,7 +1,17 @@
 <template>
+
+<!-- working with filter search  -->
   <div class="category">
     <div class="container">
-      <h3>Health Categories</h3>
+      <div class="text-right si-parent">
+        <div class="si-wrap">
+        <input class="search-input" type="search" placeholder="Search for Health Category..." v-model="searchedCategory" @input="filterCategories">
+        <font-awesome-icon :icon="['fas', 'search']" />
+        </div>
+      </div>
+      <div class="category-head-wrapper">
+        <h3>Health Categories</h3>
+      </div>
       <div class="category-wrapper">
         <router-link
           class="single-category"
@@ -16,7 +26,7 @@
             (category.CategoryName.search('Yoga and massage therapy') === -1 ? '' : 'yamt-category'),
           ]"
           :to="{ name: 'Discussion', params: { id: category.CategoryId } }"
-          v-for="category in categories"
+          v-for="category in filteredCategories"
           :key="`category-${category.CategoryId}`"
           >{{ category.CategoryName }}
         </router-link>
@@ -33,13 +43,52 @@ export default {
       required: true,
       type: Array,
     },
-  }
+  },
+  data() {
+    return {
+      searchedCategory: '',
+      filteredCategories: [],
+    };
+  },
+  watch: {
+    categories() {
+      this.filterCategories();
+    },
+  },
+  methods: {
+    filterCategories() {
+      this.filteredCategories = this.categories.filter(category => category.CategoryName.toLowerCase().search(this.searchedCategory) !== -1);
+    },
+  },
 };
 </script>
 
 <style scoped>
 .category {
-  padding: 70px 0;
+  padding: 20px 0 70px;
+}
+.category-head-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.si-parent{
+  display: flex;
+  justify-content: flex-end;
+}
+.si-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border: 1px solid #e8e8e8;
+  padding: 5px;
+  border-radius: 3px;
+  background: #f4f4f4;
+}
+.search-input{
+  background: transparent;
+  border: none;
+  min-width: 300px;
 }
 .category h3 {
   font-size: 24px;

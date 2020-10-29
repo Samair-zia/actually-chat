@@ -1,6 +1,12 @@
 <template>
   <div class="discussion">
     <div class="container">
+      <div class="text-right si-parent">
+        <div class="si-wrap">
+        <input class="search-input" type="text" placeholder="Search comments" v-model="words">
+        <font-awesome-icon :icon="['fas', 'search']" />
+        </div>
+      </div>
       <div class="question-wrap">
         <div class="mb-3">
           <router-link to="/categories" class="goto-btn"
@@ -8,6 +14,9 @@
           >
         </div>
         <h2>{{ categoryName }}</h2>
+        
+
+        <!-- <p id="tt">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi enim nihil sed impedit harum suscipit eos quae iure aliquid quas dicta, dolor neque consequatur ipsum commodi ratione voluptatibus velit aperiam.</p> -->
         <!-- <div class="question-inner" v-for="(texts, index) in data" :key="index">
           <h3>{{ texts.DiscussText }}</h3>
           <div class="quest-right-wrap">
@@ -24,6 +33,7 @@
       <!-- <DiscussQuestion /> -->
       <div class="comments-link-wrap">
         <Comments
+          :words="words"
           :commentss="commentsData"
           :discuss_id="discuss_id"
           @commented="newCommentHappened"
@@ -37,12 +47,15 @@
 <script>
 // import DiscussQuestion from '@/components/DiscussQuestion.vue'
 import Comments from "@/components/Comments.vue";
+// import findAndReplaceDOMText from 'findandreplacedomtext'
+// import Highlighter from 'vue-highlight-words'
 
 export default {
   name: "Discussion",
   components: {
     // DiscussQuestion,
     Comments,
+    // Highlighter
   },
   data() {
     return {
@@ -50,9 +63,24 @@ export default {
       commentsData: [],
       categoryName: "",
       discuss_id: null,
+      searchQuery: 'Lorem ipsum dolor sit amet',
+		// fullText: fullText,
+    // highlightType: 'highlight-yellow'
+    
+      // text: 'The dog is chasing the cat. Or perhaps they\'re just playing?',
+      words: ''
     };
   },
   methods: {
+    highlightKeyword: function(str) {
+      if(str && this.searchQuery) {
+          var highlight = [this.searchQuery.trim(), this.searchQuery.toLowerCase().trim()];
+          str = ' ' + str;
+          return str.replace(new RegExp('(.)(' + highlight.join('|') + ')(.)','ig'), '$1<span class="highlight">$2</span class="highlight">$3');
+          //return str;
+      }
+      else return str;
+    },
     newCommentHappened() {
       const data = new FormData();
       data.append("register_id", localStorage.getItem("UserID"));
@@ -112,15 +140,43 @@ export default {
         console.log("Error", error);
       });
   },
+  // computed: {
+  //   keywords() {
+  //     return this.words.split(' ')
+  //   }
+  // }
 };
+// findAndReplaceDOMText(document.getElementById('tt'), {
+//   find: /lorem/,
+//   wrap: 'em'
+// });
 </script>
 
 <style scoped>
 .discussion {
+  padding-top: 30px;
   background: #ecf0f1;
 }
 .question-wrap {
   padding: 30px 0;
+}
+.si-parent{
+  display: flex;
+  justify-content: flex-end;
+}
+.si-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border: 1px solid #e8e8e8;
+  padding: 5px;
+  border-radius: 3px;
+  background: #f4f4f4;
+}
+.search-input{
+  background: transparent;
+  border: none;
+  min-width: 300px;
 }
 .question-wrap h2 {
   font-size: 24px;

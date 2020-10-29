@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="comments">
     <section class="comment-sec-1">
       <div class="comment-wrapper">
@@ -13,18 +13,45 @@
           <button type="submit">Send</button>
         </form>
         <hr />
-        <div class="comment-inner" v-for="(comment, index) in commentss" :key="index">
+        <div
+          class="comment-inner"
+          v-for="(comment, index) in commentss"
+          :key="index"
+        >
           <h5 class="c-name">{{ comment.NickName }}</h5>
           <label class="c-time"> {{ comment.CommentsTime }} </label>
-          <p class="single-comment">{{ comment.CommentsText }}</p>
+          <Highlighter
+            class="my-highlight single-comment"
+            highlightClassName="highlight"
+            :searchWords="keywords"
+            :autoEscape="true"
+            :textToHighlight="comment.CommentsText"
+          />
 
-          <div class="reply-wrapper" v-for="(Reply, i) in comment.Reply" :key="i">
+          <div
+            class="reply-wrapper"
+            v-for="(Reply, i) in comment.Reply"
+            :key="i"
+          >
             <h5 class="c-name">{{ Reply.NickName }}</h5>
             <label class="c-time"> {{ Reply.CommentsTime }} </label>
-            <p class="single-comment">{{ Reply.CommentsText }}</p>
+            <Highlighter
+              class="my-highlight single-comment"
+              highlightClassName="highlight"
+              :searchWords="keywords"
+              :autoEscape="true"
+              :textToHighlight="Reply.CommentsText"
+            />
           </div>
-          
-          <button :class="{ ml60: comment.Reply }" data-toggle="collapse" :data-target="'#collapse' + index" aria-expanded="false" >Reply</button>
+
+          <button
+            :class="{ ml60: comment.Reply }"
+            data-toggle="collapse"
+            :data-target="'#collapse' + index"
+            aria-expanded="false"
+          >
+            Reply
+          </button>
 
           <form @submit.prevent="addReply">
             <div class="collapse" :id="'collapse' + index">
@@ -50,14 +77,19 @@
   </div>
 </template>
 
-<script>
+  <script>
+import Highlighter from "vue-highlight-words";
+
 export default {
   name: "Comments",
-  data(){
-    return{
+  components: {
+    Highlighter,
+  },
+  data() {
+    return {
       replyArray: [],
-      parentId: '',
-    }
+      parentId: "",
+    };
   },
   props: {
     commentss: {
@@ -66,6 +98,10 @@ export default {
     },
     discuss_id: {
       require: true,
+    },
+    words: {
+      require: true,
+      type: String,
     },
   },
   methods: {
@@ -114,10 +150,15 @@ export default {
       event.target.reset();
     },
   },
+  computed: {
+    keywords() {
+      return this.words.split(" ");
+    },
+  },
 };
 </script>
 
-<style scoped>
+  <style scoped>
 .comments {
   max-width: 850px;
   flex: 1;
@@ -151,6 +192,7 @@ export default {
   padding: 10px;
   border-radius: 2px;
   background: #fff;
+  display: block;
 }
 .comment-wrapper input,
 .comment-wrapper textarea {
@@ -198,10 +240,12 @@ export default {
 .ml60 {
   margin-left: 60px;
 }
-.comment-reply{
-  
-}
-.reply-wrapper{
+.comment-reply {}
+.reply-wrapper {
   margin: 20px 0 20px 60px;
+}
+.mark, mark {
+  padding: 0;
+  background-color: #fbd303;
 }
 </style>

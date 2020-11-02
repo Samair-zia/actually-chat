@@ -1,15 +1,19 @@
 <template>
   <section class="forget-sec-1">
     <div class="container">
-      <form method="post" @submit.prevent="forgot" ref="formForget">
+      <form method="post" @submit.prevent="reset" ref="formReset">
       <div class="login-inner-wrap">
         <div class="login-header">
-          <h3>Forgot Password</h3>
+          <h3>Reset Password</h3>
         </div>
         <div class="login-body">
           <div class="login-single-field">
-            <label>Email:</label>
-            <input type="email" placeholder="Enter Email" name="email" v-model="email">
+            <label>New Password:</label>
+            <input type="password" placeholder="Enter Password" name="new_password" v-model="new_password">
+          </div>
+          <div class="login-single-field">
+            <label>Confirm New Password:</label>
+            <input type="password" placeholder="Confirm Password" name="confirm_password" v-model="confirm_password">
           </div>
         </div>
         <div class="login-footer">
@@ -23,44 +27,48 @@
 
 <script>
 export default {
-  name: 'ForgotPassword',
+  name: 'ResetPassword',
   data(){
     return{
       axios: require("axios"),
-      email: '',
+      new_password: '',
+      confirm_password: '',
     }
   },
   methods: {
-    forgot(){
-      const data = new FormData(this.$refs.formForget);
-      this.axios.post(process.env.VUE_APP_APIURL + 'forgot_password_api', data)
-      .then((response) => {
-        const status = response.data.Status;
-        console.log(response);
-        console.log(status);
-        if(status == '200'){
-            alert('Password rest link is sent to your email.');
-            this.$router.push('/');
+    reset(){
+      if(this.new_password == this.confirm_password){
+        const data = new FormData(this.$refs.formReset);
+        data.append('reset_token', this.$route.params.id);
+        // console.log(this.$route.params.id);
+        this.axios.post(process.env.VUE_APP_APIURL + 'reset_password_api', data)
+        .then((response) => {
+          const status = response.data.Status;
+          console.log(response);
+          console.log(status);
+          if(status == '200'){
+            alert('Password reset.');
+            this.$router.push('/login');
           }
-          // else if(status == '400') {
-          //   alert('Bad Request. Server issue occured.')
-          // }
-          // else if(status == '403') {
-          //   alert(response.data.Status_Detail)
-          // }
           else{
-            alert('oinvalid')
+            alert('Something went wrong.')
           }
-      })
-      .catch((error) => {
-        console.log('sasasas', error);
-        if(error.response.status == '403'){
-          alert("Invalid Email! Please enter email with you've already signed up")
-        }
-      })
-      this.email= '';
+        })
+        .catch((error) => {
+          console.log('sasasas', error);
+          if(error.response.status == '403'){
+            alert("Invalid Email! Please enter email with you've already signed up.")
+          }
+        })
+
+      } else {
+        alert('Password Not matched')
+      }
+      
+      this.new_password= '';
+      this.confirm_password= '';
     }
-  }
+  },
 }
 </script>
 

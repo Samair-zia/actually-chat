@@ -153,7 +153,7 @@ export default {
   font-weight: 700;
   color: #282828;
   line-height: 1.2;
-  margin-bottom: 15px;
+  margin-bottom: 45px;
 }
 .index-2-left-wrap p {
   font-size: 16px;
@@ -196,7 +196,8 @@ export default {
   font-weight: 700;
   color: #282828;
   line-height: 1.2;
-  text-align: center;
+  text-align: left;
+  padding-left: 15px;
 }
 @media only screen and (max-width: 1380px) {
   .main-inner-wrap {

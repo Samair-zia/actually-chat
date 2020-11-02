@@ -11,6 +11,7 @@ import Categories from '../views/Categories.vue'
 import Discussion from '../views/Discussion.vue'
 import DiscussionList from '../views/DiscussionList.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
+import ResetPassword from '../views/ResetPassword.vue'
 import Careers from '../views/Careers.vue'
 import Advertisement from '../views/Advertisement.vue'
 
@@ -97,6 +98,11 @@ const routes = [
     path: '/forgot-password',
     name: 'ForgotPassword',
     component: ForgotPassword
+  },
+  {
+    path: '/reset-password/:id',
+    name: 'ResetPassword',
+    component: ResetPassword
   }
 ]
 

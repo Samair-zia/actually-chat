@@ -37,7 +37,7 @@ export default {
   font-weight: 700;
   color: #000;
   line-height: 1.2;
-  text-transform: uppercase;
+  text-transform: capitalize;
   position: relative;
 }
 </style>

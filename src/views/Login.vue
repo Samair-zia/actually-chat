@@ -87,21 +87,10 @@
                           </ValidationProvider>
                         </div>
                         <div class="login-footer">
-                          <!-- <p class="member-agree">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
-                            debitis vitae. Lorem ipsum dolor sit amet consectetur.
-                            <a
-                              href="#collapseExample"
-                              data-toggle="collapse"
-                              aria-expanded="false"
-                              aria-controls="collapseExample"
-                            >Read More</a>
-                          </p> -->
-                          <!-- <p class="collapse member-agree" id="collapseExample">
-                            Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Accusamus enim harum commodi illum quas fugit? Nam, enim similique, culpa
-                            itaque esse amet fugit laborum aliquid odio atque temporibus blanditiis tempora.
-                          </p> -->
+                          <div>
+                            <vue-recaptcha class="g-recaptcha" @verify="markRecaptchaAsVerified" sitekey="6LculNwZAAAAABFt_vmk1zy_EQXxPMNUYqXDX2GD" required></vue-recaptcha>
+                            <small>{{ pleaseTickRecaptchaMessage }}</small>
+                          </div>
                           <ValidationProvider name="Accept" rules="required" v-slot="{ errors }">
                             <label>
                               <input type="checkbox" v-model="signupFields.acceptTerms" /> I agree to <router-link to="/members-agreements">members agreement</router-link> form
@@ -159,7 +148,7 @@
                           </ValidationProvider>
                       </div>
                       <div class="login-footer">
-                        <!-- <router-link to="/forgot-password" class="forgot">Forgot Password</router-link> -->
+                        <router-link to="/forgot-password" class="forgot">Forgot Password</router-link>
                         <button>Login</button>
                       </div>
                     </div>
@@ -176,8 +165,13 @@
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha';
+
 export default {
   name: "Login",
+  components: { 
+    VueRecaptcha 
+  },
   data() {
     return {
       axios: require("axios"),
@@ -191,13 +185,34 @@ export default {
       loginFields: {
         register_email: "",
         register_pswd: "",
-      }
+      },
+      pleaseTickRecaptchaMessage: '',
+      recaptchaVerified: false,
+      // recaptcha: null
     };
   },
   methods: {
+    markRecaptchaAsVerified(response) {
+      this.pleaseTickRecaptchaMessage = '';
+      this.recaptchaVerified = true;
+      console.log(response)
+    },
+    // checkIfRecaptchaVerified() {
+    //   if (!this.recaptchaVerified) {
+    //     this.pleaseTickRecaptchaMessage = 'Please tick recaptcha.';
+    //     return true; // prevent form from submitting
+    //   }
+    //   console.log('form will be posted')
+    // },
     signup() {
       const data = new FormData(this.$refs.formHTML);
-      // console.log(data);
+      data.delete('g-recaptcha-response');
+      if (!this.recaptchaVerified) {
+        this.pleaseTickRecaptchaMessage = 'Please tick recaptcha.';
+        return true; // prevent form from submitting
+      } else{
+        console.log('submited')
+      }
       this.axios
         .post(
           process.env.VUE_APP_APIURL + 'register_api',
@@ -255,10 +270,18 @@ export default {
         });
     },
   },
+  mounted(){
+    let recaptchaScript = document.createElement('script')
+      recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit')
+      document.head.appendChild(recaptchaScript)
+  }
 };
 </script>
 
 <style scoped>
+.asss small{
+  display: block;
+}
 .login-sec-1 {
   padding: 40px 0;
   margin-bottom: 70px;

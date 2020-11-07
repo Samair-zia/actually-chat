@@ -103,9 +103,9 @@ export default {
         });
     },
   },
-  beforeRouteEnter(to, from, next) {
+  created() {
     require("axios")
-      .get(process.env.VUE_APP_APIURL + "discussion_api/" + to.params.id)
+      .get(process.env.VUE_APP_APIURL + "discussion_api/" + this.$route.params.id)
       .then((response) => {
         if (response.data.Message.Discussion) {
           const discuss_id = [...response.data.Message.Discussion][0].DiscussId;
@@ -122,11 +122,20 @@ export default {
               }
             )
             .then((response) => {
-              next(vm => {
-                vm.data = response.data.Message.Discussion,
-                vm.discuss_id = discuss_id;
-                vm.commentsData = response.data.Message.Comments;
-                vm.categoryName = vm.data[0].CategoryName;
+              this.data = response.data.Message.Discussion,
+              this.discuss_id = discuss_id;
+              this.commentsData = response.data.Message.Comments;
+              this.categoryName = this.data[0].CategoryName;
+            })
+            .then(() => {
+              require('jquery')('.summernote').summernote({
+                toolbar: [
+                  ['fontstyle', ['fontname', 'fontsize', 'color', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'deleteallformat']],
+                  ['insert', ['link']],
+                  ['para', ['style', 'ul', 'ol', 'paragraph']],
+                  // ['misc', ['undo', 'redo', 'codeview']],
+                ],
+                height: 100,
               });
             })
             .catch((error) => {

@@ -13,7 +13,7 @@
           </div>
           <div class="col-sm-4 col-md-4 col-lg-4">
             <div class="head-top-right-wrap">
-              <a href="#!" class="hide-on-mob"><i class="fas fa-phone-alt"></i>Contact: {{ headerPhone }}</a>
+              <a href="tel:9199173803" class="hide-on-mob"><i class="fas fa-phone-alt"></i>Contact: {{ headerPhone }}</a>
             </div>
           </div>
         </div>

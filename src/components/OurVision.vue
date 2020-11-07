@@ -4,18 +4,18 @@
         <div class="row align-items-center">
           <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="index-2-left-wrap">
-              <p data-aos="fade-up" data-aos-duration="1500">{{ visionText }}</p>
+              <p v-html="visionText"></p>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="index-2-img-wrap">
-              <img src="@/assets/images/vision-img-1.png" class="img-fluid" alt="" data-aos="zoom-in-up" data-aos-duration="1500">
+              <img src="@/assets/images/vision-img-1.png" class="img-fluid" alt="">
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-12">
-            <p class="para-text" data-aos="fade-down" data-aos-duration="1500">{{ visionSubText }}</p>
+            <p class="para-text" v-html="visionSubText"></p>
           </div>
         </div>
       </div>

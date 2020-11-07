@@ -3,14 +3,17 @@
     <section class="comment-sec-1">
       <div class="comment-wrapper">
         <form @submit.prevent="addComment">
+          <!-- <wysiwyg v-model="comments_text"/> -->
           <textarea
             name="comments_text"
             rows="4"
             placeholder="Share your experiences, questions and responses"
             required
+            class="summernote"
           ></textarea>
           <br />
           <button type="submit">Send</button>
+          <!-- <button type="submit" :disabled="!comments_text">Send</button> -->
         </form>
         <hr />
         <div
@@ -26,6 +29,7 @@
             :searchWords="keywords"
             :autoEscape="true"
             :textToHighlight="comment.CommentsText"
+            v-html="comment.CommentsText"
           />
 
           <div
@@ -41,6 +45,7 @@
               :searchWords="keywords"
               :autoEscape="true"
               :textToHighlight="Reply.CommentsText"
+              v-html="Reply.CommentsText"
             />
           </div>
 
@@ -65,6 +70,8 @@
                   name="comments_text"
                   rows="4"
                   placeholder="Enter comment"
+                  class="summernote"
+                  :data-id="'summer' + index"
                 ></textarea>
                 <br />
                 <button type="submit">Send</button>
@@ -77,7 +84,7 @@
   </div>
 </template>
 
-  <script>
+<script>
 import Highlighter from "vue-highlight-words";
 
 export default {
@@ -89,6 +96,7 @@ export default {
     return {
       replyArray: [],
       parentId: "",
+      // comments_text: '',
     };
   },
   props: {
@@ -106,10 +114,15 @@ export default {
   },
   methods: {
     addComment(event) {
+      // if (this.comments_text == ''){
+      
+      // }
+    // addComment() {
       const data = new FormData(event.target);
       data.append("register_id", localStorage.getItem("UserID"));
       data.append("discus_id", this.discuss_id);
       data.append("parent_comment_id", 0);
+      // data.append("comments_text", this.comments_text);
       require("axios")
         .post(process.env.VUE_APP_APIURL + "post_comments_api", data, {
           headers: {
@@ -126,7 +139,9 @@ export default {
         .catch((error) => {
           console.log("Error from comments: ", error);
         });
-      event.target.reset();
+        event.target.reset();
+        require('jquery')('.summernote').summernote('reset');
+      // this.comments_text= '';
     },
     addReply(event) {
       const data = new FormData(event.target);
@@ -147,7 +162,9 @@ export default {
         .catch((error) => {
           console.log("Error from comments: ", error);
         });
-      event.target.reset();
+      // event.target.reset();
+        require('jquery')('.summernote').summernote('reset');
+
     },
   },
   computed: {
@@ -155,10 +172,48 @@ export default {
       return this.words.split(" ");
     },
   },
+  mounted() {
+    // require('jquery')('.summernote').summernote({
+    //   toolbar: [
+    //     ['fontstyle', ['fontname', 'fontsize', 'color', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'deleteallformat']],
+    //     ['insert', ['link']],
+    //     ['para', ['style', 'ul', 'ol', 'paragraph']],
+    //     // ['misc', ['undo', 'redo', 'codeview']],
+    //   ],
+    //   height: 100,
+    // });
+    // require('jquery')('.summernote2').summernote({
+    //   toolbar: [
+    //     ['fontstyle', ['fontname', 'fontsize', 'color', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'deleteallformat']],
+    //     ['insert', ['link']],
+    //     ['para', ['style', 'ul', 'ol', 'paragraph']],
+    //     // ['misc', ['undo', 'redo', 'codeview']],
+    //   ],
+    //   height: 100,
+    // });
+
+      require('jquery')('.summernote2').each(function(i, obj) { require('jquery')(obj).summernote({
+      //   toolbar: [
+      //   ['fontstyle', ['fontname', 'fontsize', 'color', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'deleteallformat']],
+      //   ['insert', ['link']],
+      //   ['para', ['style', 'ul', 'ol', 'paragraph']],
+      //   // ['misc', ['undo', 'redo', 'codeview']],
+      // ],
+      // height: 100,
+        onblur: function() {
+          var id = require('jquery')(obj).data('id');
+          console.log(id)
+          var sHTML = require('jquery')(obj).code();
+          alert(sHTML);
+        }
+  });
+});
+
+  }
 };
 </script>
 
-  <style scoped>
+<style scoped>
 .comments {
   max-width: 850px;
   flex: 1;
@@ -224,6 +279,11 @@ export default {
   border: none;
   margin-top: 20px;
 }
+.comment-wrapper button:disabled{
+  background-image: linear-gradient(0deg, #eeeeee, #b4b4b4);
+  color: #000;
+  cursor: not-allowed;
+}
 .comment-inner button {
   width: 95px;
   background: #d4af37;
@@ -248,4 +308,5 @@ export default {
   padding: 0;
   background-color: #fbd303;
 }
+
 </style>

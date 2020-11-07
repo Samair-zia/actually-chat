@@ -97,7 +97,7 @@
                             </label> <br>
                             <span>{{ errors[0] }}</span><br>
                           </ValidationProvider>
-                          <button>Signup</button>
+                          <button :disabled="!signupFields.acceptTerms">Signup</button>
                         </div>
                       </div>
                     </form>
@@ -180,7 +180,7 @@ export default {
         username: "",
         register_email: "",
         register_pswd: "",
-        acceptTerms: null,
+        acceptTerms: false,
       },
       loginFields: {
         register_email: "",
@@ -223,13 +223,15 @@ export default {
           // console.log(status);
           // console.log("Result", response.data);
           if(status == '200'){
+            alert('Email sent to your email address for verification.')
             this.$router.push('/');
           }
           else if(status == '400') {
             alert('Bad Request. Server issue occured.')
           }
           else if(status == '422') {
-            alert(response.data.Message.register_email)
+            // alert(response.data.Message.register_email)
+            alert('This email is already registered with the website.')
           }
         })
         .catch((error) => {
@@ -360,6 +362,11 @@ export default {
   height: 37px;
   border: none;
 }
+.login-footer button:disabled{
+  background-image: linear-gradient(0deg, #eeeeee, #b4b4b4);
+  color: #000;
+  cursor: not-allowed;
+}
 .login-footer label {
   font-size: 14px;
   font-family: Poppins, sans-serif;
@@ -489,6 +496,9 @@ export default {
 @media only screen and (max-width:575px) {
 .login-inner-wrap {
   padding: 10px 15px;
+}
+.login-sec-1 .center-wrap {
+  padding: 0 15px;
 }
 }
 </style>

@@ -3,7 +3,7 @@
     <section class="index-sec-1">
       <div class="container">
         <div class="main-inner-wrap">
-          <h1 v-html="banner.bannerText" data-aos="fade-up" data-aos-duration="1500"></h1>
+          <h1 v-html="banner.bannerText"></h1>
         </div>
       </div>
     </section>
@@ -12,11 +12,10 @@
         <div class="row align-items-center">
           <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="index-2-left-wrap">
-              <h3 data-aos="zoom-in-down" data-aos-duration="1500">Our Vision</h3>
+              <h3 >Our Vision</h3>
               <p
-                data-aos="fade-up"
-                data-aos-duration="1500"
-              >{{ vision.visionText }}</p>
+                v-html="vision.visionText"
+              ></p>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
@@ -24,8 +23,6 @@
               <img
                 src="@/assets/images/vision-img-1.png"
                 class="img-fluid"
-                data-aos="zoom-in-up"
-                data-aos-duration="1500"
               />
             </div>
           </div>
@@ -34,16 +31,15 @@
           <div class="col-12">
             <p
               class="para-text"
-              data-aos="fade-down"
-              data-aos-duration="1500"
-            >{{ vision.visionSubtext }}</p>
+              v-html="vision.visionSubtext"
+            ></p>
           </div>
         </div>
       </div>
     </section>
     <section class="index-sec-3">
       <div class="container">
-        <h3 data-aos="zoom-in-down" data-aos-duration="1500">Our Team</h3>
+        <h3>Our Team</h3>
         <OurTeam />
       </div>
     </section>

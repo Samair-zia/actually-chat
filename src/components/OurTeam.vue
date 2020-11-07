@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-6 mb-5" v-for="(member , index) in members" :key="index">
-          <div class="single-member-wrap" data-aos="fade-down" data-aos-duration="1800">
+          <div class="single-member-wrap">
             <div class="sm-img-wrap">
               <img :src="baseURL + member.TeamMemberImage" class="img-fluid" alt="">
               <div class="sm-img-inner">

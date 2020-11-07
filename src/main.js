@@ -4,9 +4,14 @@ import router from './router';
 import store from './store';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import 'jquery';
+
+window.$ = window.jQuery = require('jquery');
 
 import 'bootstrap';
 import 'popper.js';
+import 'summernote';
+import 'summernote/dist/summernote-bs4';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -17,7 +22,18 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ValidationProvider } from 'vee-validate/dist/vee-validate.full.esm';
 import { ValidationObserver } from 'vee-validate'
 
-window.$ = window.jQuery = require('jquery');
+// editor
+import wysiwyg from "vue-wysiwyg";
+Vue.use(wysiwyg, {
+  hideModules: { 
+    "image": true,
+    "table": true,
+    "justifyLeft": true,
+    "justifyCenter": true,
+    "justifyRight": true,
+    "separator": true,
+  },
+});
 
 import './assets/css/style.css';
 
@@ -30,7 +46,7 @@ Vue.config.productionTip = false;
 
 new Vue({
   mounted() {
-    AOS.init({ disable: "phone" });
+    AOS.init({ disable: "mobile" });
   },
   router, store,
   render: h => h(App)
